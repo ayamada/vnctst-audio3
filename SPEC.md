@@ -1,23 +1,16 @@
 # vnctst-audio3 仕様書
 
-TODO
-
-
-
-
-# 一時メモ(READMEから移動させてきたそのままの状態)
-
-- android版chromeでの、WebAudioの音源ロードに異様に時間がかかる問題
-  (この環境のBGM/BGS/MEのみ、WebAudioではなくHtmlAudioでの再生とする。
-  ただし、この環境でもSEはWebAudioとする)
+これは、vnctst-audio3同様の音源ライブラリを開発したいと思う人の為に、vnctst-audio3の仕様を書き記したものです。
 
 
 ## 用語について
 
-- device, (再生)デバイス : 物理的なデバイスではなく、
-  WebAudioやHtmlAudio等(のラッパー層)を指す語。
-    - デバイス層は低レベルの機能だけを提供する。
-      提供する機能の詳細は後述。
+- BGM, BGS, ME, SE : [README.md](README.md) を参照。
+    - なお、単に「BGM」と言った場合でも、BGSとMEを含む意味で言っているケースがある(処理の分類としては「BGM/BGS/ME」「SE」の二種に分かれる為)。
+
+- device, (再生)デバイス : 物理的なデバイスではなく、WebAudioやHtmlAudio等(のラッパー層)を指す語。
+    - デバイス層は低レベルの機能だけを提供する。提供する機能の詳細は後述。
+    - デバイス種別についても後述。これは後から追加が可能。
 
 - audio-source, as, 音源ソース : urlからロードされた音源データ。
   この実体はdeviceによってまちまちだが、単一のmapとして表現される。
@@ -31,15 +24,62 @@ TODO
       再生パラメータを変更したりできる。
 
 
+## 要件
+
+- BGM/BGS/MEの再生体系と、SEの再生体系は大きく違う。
+    - 詳細は後述するが、BGM系はフェード処理および次の曲の予約管理が必要であり、またSEは同時多重再生(および管理)が必要となる点で違いがある
+    - なので、高レベルでは、BGM系とSEの処理は完全に分けた方がよい
+    - しかし低レベルでの再生部分については共有できる部分が多い。よって、低レベル部分を「device」層として分離し、BGM系とSEとで共有できるようにする
+        - なお、「BGM系とSEとで違うdeviceを使うようにしたい」というニーズがあるという点に注意。
+
+- BGMの再生とMEの再生は同じ一つのインスタンス(ステート)で管理される。BGSはそれとは違う別のインスタンス(ステート)で管理される
+    - これによって「BGM(もしくはME)と同時に、BGSを鳴らす」事を実現する
+    - ここでは、これを「BGMステート」「BGSステート」と呼ぶ事にする
+
+- BGMステートおよびBGSステートは、以下の機能を持つ
+    - フェードアウト
+    - 次に再生する曲の予約処理(フェードアウト後に再生する事になる為)
+
+TODO
+
+
+## 環境固有の要件
+
+- バックグラウンド時に消音してくれる機能があるとより良い
+
+- android版chromeでは、WebAudioの音源ロード(デコード)に異様に時間がかかる問題がある
+    - この問題に対しては、「BGM/BGS/MEのみ、WebAudioではなくHtmlAudioでの再生とする」という対策がある
+        - SEについてはデータ量が短い事が多い為、WebAudioでも問題ないようだ
+
+- iOS系では「まず最初にタッチ系イベントハンドル内から音を出す処理を行う」必要があり、この処理を行うまでは音の再生は無効化される
+    - この処理をここでは「アンロック」と呼ぶ事にする
+
+
+## BGMの状態遷移
+
+TODO
+
+
+## ...
+
+TODO
+
+
+
 ## デバイス種別
 
-- vnctst.audio3.device.dumb - コンソール出力のみのダミーデバイス
+- `vnctst.audio3.device.dumb` - コンソール出力のみのダミーデバイス
     - WebAudioもHtmlAudioも利用可能でない場合にこれが採用される。もちろん音は出ない。
-- vnctst.audio3.device.web-audio - WebAudioラッパ
-- vnctst.audio3.device.html-audio-single - HtmlAudioラッパ(単チャンネル再生)
-    - モバイル環境を想定して、同一SEの多重再生を行わないタイプ。同一SEの多重再生リクエストがあった際には、先に鳴っていたSEを停止させてから新しいSEを再生させる。違うSEであれば普通に多重再生できる。
-- vnctst.audio3.device.html-audio-multi - HtmlAudioラッパ(多チャンネル再生)
+
+- `vnctst.audio3.device.web-audio` - WebAudioラッパ
+
+- `vnctst.audio3.device.html-audio-single` - HtmlAudioラッパ(単チャンネル再生)
+    - モバイル環境を想定して、同一SEの多重再生を行わないタイプ。
+    - 同一SEの多重再生リクエストがあった際には、先に鳴っていたSEを停止させてから新しいSEを再生させる。違うSEであれば普通に多重再生できる。
+
+- `vnctst.audio3.device.html-audio-multi` - HtmlAudioラッパ(多チャンネル再生)
     - PC環境を想定して、同一SEの多重再生を行うタイプ。
+    - 内部で `vnctst.audio3.device.html-audio-single` を再利用している
 
 
 # 付録

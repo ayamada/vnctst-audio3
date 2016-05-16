@@ -1,6 +1,6 @@
 (ns vnctst.audio3.js
-  (:require [vnctst.audio3 :as audio3]
-            [project-clj.core :as project-clj]))
+  (:require-macros [project-clj.core :as project-clj])
+  (:require [vnctst.audio3 :as audio3]))
 
 
 (def ^:export version (project-clj/get :version))
@@ -29,11 +29,11 @@
 (def ^:export get_volume_me audio3/get-volume-me)
 (def ^:export get_volume_se audio3/get-volume-se)
 
-(def ^:export set_volume_master saudio3/et-volume-master!)
-(def ^:export set_volume_bgm saudio3/et-volume-bgm!)
-(def ^:export set_volume_bgs saudio3/et-volume-bgs!)
-(def ^:export set_volume_me saudio3/et-volume-me!)
-(def ^:export set_volume_se saudio3/et-volume-se!)
+(def ^:export set_volume_master audio3/set-volume-master!)
+(def ^:export set_volume_bgm audio3/set-volume-bgm!)
+(def ^:export set_volume_bgs audio3/set-volume-bgs!)
+(def ^:export set_volume_me audio3/set-volume-me!)
+(def ^:export set_volume_se audio3/set-volume-se!)
 
 
 
@@ -48,7 +48,7 @@
 ;;; (play! :se/hoge) のようなものを簡潔に表現できない。そこで、
 ;;; vnctst.audio3.js.play({se: "hoge"}) と指定できるようにする
 (defn- conv-kp [key-or-path]
-  (if-not (= js/Object (class key-or-path))
+  (if-not (= js/Object (type key-or-path))
     key-or-path
     (let [m (js->clj (key-or-path))
           [k v] (first m)]

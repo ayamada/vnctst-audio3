@@ -49,6 +49,7 @@
            [:body
             {:onload "vnctst.audio3.demo.bootstrap()"}
             [:h1 title]
+            ;; TODO: githubへのリンク等を設置
             ;[:div#the-game [:div#preloading [:div.valign-middle "LOADING"]]]
             [:div
              ;; TODO: ロード中は表示しないようにする

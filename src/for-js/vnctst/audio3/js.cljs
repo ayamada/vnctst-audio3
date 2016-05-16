@@ -15,9 +15,11 @@
 
 
 
-(defn ^:export init [& options]
-  ;; TODO: optionsを js->clj にかける
-  (apply audio3/init! options))
+(defn ^:export init [& [option]]
+  (if-let [option (when option
+                    (js->clj option :keywordize-keys true))]
+    (audio3/init! option)
+    (audio3/init!)))
 
 
 

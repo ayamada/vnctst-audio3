@@ -46,7 +46,7 @@
   ;; 基本的に、以下の場合分けになる
   ;; - 開発用(サンプルデモ使用)
   ;;   - ringサーバ起動
-  ;;     - lein with-profile ring trampoline ring server-headless
+  ;;     - lein with-profile ring ring server-headless
   ;;   - figwheelサーバ起動
   ;;     - rlwrap lein with-profile cljs,js,demo-dev figwheel demo-dev
   ;; - リリース用
@@ -58,12 +58,13 @@
   ;;     - lein with-profile cljs,js,demo-prod cljsbuild once demo-prod
   :profiles {:cljs {:dependencies [[org.clojure/clojurescript "1.8.51"]]}
              :ring {:source-paths ["src/ring"]
-                    :dependencies[[ring/ring-core "1.4.0"]
+                    :dependencies[[org.clojure/clojure "1.8.0"]
+                                  [ring/ring-core "1.4.0"]
                                   [hiccup "1.0.5"]]
                     :resource-paths ["resources"]
                     :plugins [[lein-ring "0.9.7"]]
-                    :ring {:port 8018
-                           :handler vnctst.audio3.demo-server/handler}}
+                    :ring {:port 8003
+                           :handler vnctst.audio3.demo.server/handler}}
              :js {:dependencies [[jp.ne.tir/project-clj "0.1.6"]]
                   :source-paths ["src/cljs" "src/for-js"]}
              :demo-dev {:source-paths ["src/cljs" "src/for-js"
@@ -81,6 +82,6 @@
                                    :jar true}
                        }}
   :figwheel {:http-server-root "public"
-             :server-port 9018
+             :server-port 9003
              :server-logfile "figwheel_server.log"}
   )

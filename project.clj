@@ -43,7 +43,7 @@
                '[[figwheel "0.5.3"]])))
 
 
-(defproject jp.ne.tir/vnctst-audio3 "0.1.0-SNAPSHOT"
+(defproject jp.ne.tir/vnctst-audio3 "0.1.0-rc1"
   :description "audio playback library for html5 game"
   :url "https://github.com/ayamada/vnctst-audio3"
   :license {:name "MIT License"

@@ -39,20 +39,20 @@
 (defn get-volume-se [] (state/get :volume-se))
 
 (defn set-volume-master! [v]
-  (state/set! :volume-master (max 0 (min 100 (int v))))
+  (state/set! :volume-master (max 0 (min 1 v)))
   (bgm/sync-bgm-volume!)
   (bgm/sync-bgs-volume!))
 (defn set-volume-bgm! [v]
-  (state/set! :volume-bgm (max 0 (min 100 (int v))))
+  (state/set! :volume-bgm (max 0 (min 1 v)))
   (bgm/sync-bgm-volume!))
 (defn set-volume-bgs! [v]
-  (state/set! :volume-bgs (max 0 (min 100 (int v))))
+  (state/set! :volume-bgs (max 0 (min 1 v)))
   (bgm/sync-bgs-volume!))
 (defn set-volume-me! [v]
-  (state/set! :volume-me (max 0 (min 100 (int v))))
+  (state/set! :volume-me (max 0 (min 1 v)))
   (bgm/sync-bgm-volume!))
 (defn set-volume-se! [v]
-  (state/set! :volume-se (max 0 (min 100 (int v))))
+  (state/set! :volume-se (max 0 (min 1 v)))
   ;; NB: SEのみ、現チャンネルへの反映は不要
   )
 

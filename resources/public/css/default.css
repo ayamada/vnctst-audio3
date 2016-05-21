@@ -1,0 +1,82 @@
+@charset "UTF-8";
+
+
+body {
+  padding: 64px 16px 16px 16px;
+}
+
+
+
+a:link {
+  text-decoration: underline;
+  background-color: transparent;
+  color: #9f9fff;
+}
+a:visited {
+  text-decoration: underline;
+  background-color: transparent;
+  color: #7f7fdf;
+}
+a:hover {
+  text-decoration: none;
+  background-color: #1f1f7f;
+  color: #ffffff;
+}
+a:active {
+  text-decoration: none;
+  background-color: #1f1f1f;
+  color: #9f9fff;
+}
+
+
+
+
+
+
+
+div#the-game {
+  margin: 0 auto;
+  padding: 0;
+  border: 4px solid black;
+  width: 256px;
+  height: 128px;
+}
+
+div#preloading {
+  width: 256px;
+  height: 128px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-weight: bold;
+  display: table;
+}
+
+
+/* for label / button */
+.valign-top {
+  display: table-cell;
+  vertical-align: top;
+  margin: 0;
+  padding: 0;
+}
+.valign-middle {
+  display: table-cell;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+}
+.valign-bottom {
+  display: table-cell;
+  vertical-align: bottom;
+  margin: 0;
+  padding: 0;
+}
+
+.instruction {
+  text-align: center;
+  margin: 1em;
+}
+
+
+

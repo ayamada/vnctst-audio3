@@ -50,7 +50,7 @@
 (defn- conv-kp [key-or-path]
   (if-not (= js/Object (type key-or-path))
     key-or-path
-    (let [m (js->clj (key-or-path))
+    (let [m (js->clj key-or-path)
           [k v] (first m)]
       ;(assert (= 1 (count m)))
       (assert (not (nil? k)) "k must be not null")

@@ -44,6 +44,7 @@
 
 
 (defproject jp.ne.tir/vnctst-audio3 "0.1.0-SNAPSHOT"
+  :min-lein-version "2.5.0"
   :description "audio playback library for html5 game"
   :url "https://github.com/ayamada/vnctst-audio3"
   :license {:name "MIT License"

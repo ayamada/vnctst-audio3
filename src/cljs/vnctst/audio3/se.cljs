@@ -46,7 +46,7 @@
   (when-not @playing-audiochannel-pool-watcher
     (let [c (async/chan)]
       (go-loop []
-        ;; TODO: 停止コマンドを受け付けるようにする
+        ;; TODO: cから停止コマンドを受け付けるようにする
         (<! (async/timeout 1111))
         (swap! playing-audiochannel-pool
                (fn [old]
@@ -271,6 +271,7 @@
 ;;; NB: 鳴っている最中には呼ばない事。
 (defn unload! [key-or-path]
   ;; TODO: 鳴っている最中に呼ばないように、現在再生中のSEなら先に強制停止させる
+  ;;       @playing-audiochannel-pool から調べて対応する
   (if (loaded? key-or-path)
     ;; ロード済
     (when-let [as (get @loaded-audiosource-table key-or-path)]

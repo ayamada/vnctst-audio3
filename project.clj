@@ -31,16 +31,16 @@
 (def plugins-cljs-prod '[[lein-cljsbuild "1.1.3"]])
 
 (def plugins-cljs-dev (vec (concat plugins-cljs-prod
-                                   '[[lein-figwheel "0.5.3"]])))
+                                   '[[lein-figwheel "0.5.4-3"]])))
 
 (def dependencies-cljs-prod
   '[[org.clojure/clojure "1.8.0"]
-    [org.clojure/clojurescript "1.8.51"]
+    [org.clojure/clojurescript "1.9.76"]
     [jp.ne.tir/project-clj "0.1.6"]])
 
 (def dependencies-cljs-dev
   (vec (concat dependencies-cljs-prod
-               '[[figwheel "0.5.3"]])))
+               '[[figwheel "0.5.4-3"]])))
 
 
 (defproject jp.ne.tir/vnctst-audio3 "0.1.0-SNAPSHOT"
@@ -49,7 +49,7 @@
   :url "https://github.com/ayamada/vnctst-audio3"
   :license {:name "MIT License"
             :url "http://opensource.org/licenses/MIT"}
-  :dependencies [[org.clojure/core.async "0.2.374"]]
+  :dependencies [[org.clojure/core.async "0.2.385"]]
   :source-paths ["src/cljs"]
   :clean-targets ^{:protect false} [:target-path
                                     :compile-path
@@ -74,7 +74,7 @@
   ;;     - lein clean && lein with-profile demo-prod cljsbuild once demo-prod
   :profiles {:ring {:source-paths ["src/ring"]
                     :dependencies [[org.clojure/clojure "1.8.0"]
-                                   [ring/ring-core "1.4.0"]
+                                   [ring/ring-core "1.5.0"]
                                    [hiccup "1.0.5"]]
                     :resource-paths ["resources"]
                     :plugins [[lein-ring "0.9.7"]]

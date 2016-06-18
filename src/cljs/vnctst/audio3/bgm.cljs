@@ -528,8 +528,12 @@
 
 
 
-;;; NB: 鳴っている最中には呼ばない事。
 (defn unload! [key-or-path]
+  ;; 鳴っている最中に呼ばないように、現在再生中の曲なら先に強制停止させる
+  (when (= key-or-path (get-in @bgm-state [:current-param :key]))
+    (stop-bgm! key-or-path 0))
+  (when (= key-or-path (get-in @bgs-state [:current-param :key]))
+    (stop-bgs! key-or-path 0))
   (if (preloaded? key-or-path)
     ;; ロード済
     (when-let [as (get @preload-table key-or-path)]

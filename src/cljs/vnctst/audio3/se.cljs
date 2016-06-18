@@ -270,6 +270,7 @@
 ;;; 一時的にしか使わないseをアンロードする
 ;;; NB: 鳴っている最中には呼ばない事。
 (defn unload! [key-or-path]
+  ;; TODO: 鳴っている最中に呼ばないように、現在再生中のSEなら先に強制停止させる
   (if (loaded? key-or-path)
     ;; ロード済
     (when-let [as (get @loaded-audiosource-table key-or-path)]

@@ -1,6 +1,9 @@
 # vnctst-audio3 開発手順書
 
+
 ## コーディングポリシーについて
+
+@ayamada 以外の人がコードを書く場合は、こちらの記事を参照しておいてください。
 
 TODO: 先にブログの記事として上げて、そこへのリンクを貼る
 
@@ -39,6 +42,8 @@ http://vnctst.tir.jp/vnctst-audio3-demo/ の動作デモを使って開発や動
 6. js向け配布物である `vnctst-audio3.js` もビルドする
     - `lein clean && lein with-profile for-js cljsbuild once for-js`
     - ビルドしたら忘れずにコミットしておく事。
+        - コミットメッセージは上記同様 `'Releasing 0.1.2'` とかでよい
+          (バージョン番号を書いておいた方が分かりやすい)
 
 7. clojarsにデプロイする
     - `lein deploy clojars`
@@ -57,6 +62,12 @@ http://vnctst.tir.jp/vnctst-audio3-demo/ の動作デモを使って開発や動
 
 
 ## 動作デモのリリースビルド生成およびデプロイ手順
+
+この作業は @ayamada しか行わない筈です。
+なので @ayamada の環境にものすごく依存しています(ssh設定やローカルコマンド等)。
+
+あくまで「動作デモ」単体でのリリースビルドおよびデプロイです。
+配布物のリリースビルド生成ではない点に一応注意。
 
 1. リリース版のcljsコンパイル
     - `lein clean && lein with-profile demo-prod cljsbuild once demo-prod`

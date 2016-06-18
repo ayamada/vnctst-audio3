@@ -23,24 +23,24 @@
 
 
 
-(def ^:export get_volume_master audio3/get-volume-master)
-(def ^:export get_volume_bgm audio3/get-volume-bgm)
-(def ^:export get_volume_bgs audio3/get-volume-bgs)
-(def ^:export get_volume_me audio3/get-volume-me)
-(def ^:export get_volume_se audio3/get-volume-se)
+(def ^:export getVolumeMaster audio3/get-volume-master)
+(def ^:export getVolumeBgm audio3/get-volume-bgm)
+(def ^:export getVolumeBgs audio3/get-volume-bgs)
+(def ^:export getVolumeMe audio3/get-volume-me)
+(def ^:export getVolumeSe audio3/get-volume-se)
 
-(def ^:export set_volume_master audio3/set-volume-master!)
-(def ^:export set_volume_bgm audio3/set-volume-bgm!)
-(def ^:export set_volume_bgs audio3/set-volume-bgs!)
-(def ^:export set_volume_me audio3/set-volume-me!)
-(def ^:export set_volume_se audio3/set-volume-se!)
+(def ^:export setVolumeMaster audio3/set-volume-master!)
+(def ^:export setVolumeBgm audio3/set-volume-bgm!)
+(def ^:export setVolumeBgs audio3/set-volume-bgs!)
+(def ^:export setVolumeMe audio3/set-volume-me!)
+(def ^:export setVolumeSe audio3/set-volume-se!)
 
 
 
-(defn ^:export stop_bgm [& [fade-sec]] (audio3/stop-bgm! fade-sec))
-(defn ^:export stop_bgs [& [fade-sec]] (audio3/stop-bgs! fade-sec))
-(defn ^:export stop_me [& [fade-sec]] (audio3/stop-me! fade-sec))
-(defn ^:export stop_se [chan & [fade-sec]] (audio3/stop-se! chan fade-sec))
+(defn ^:export stopBgm [& [fade-sec]] (audio3/stop-bgm! fade-sec))
+(defn ^:export stopBgs [& [fade-sec]] (audio3/stop-bgs! fade-sec))
+(defn ^:export stopMe [& [fade-sec]] (audio3/stop-me! fade-sec))
+(defn ^:export stopSe [chan & [fade-sec]] (audio3/stop-se! chan fade-sec))
 
 
 
@@ -59,16 +59,16 @@
 
 
 
-(defn ^:export play_bgm [key-or-path & [vol pitch pan]]
+(defn ^:export playBgm [key-or-path & [vol pitch pan]]
   (audio3/play-bgm! (conv-kp key-or-path) vol pitch pan))
 
-(defn ^:export play_bgs [key-or-path & [vol pitch pan]]
+(defn ^:export playBgs [key-or-path & [vol pitch pan]]
   (audio3/play-bgs! (conv-kp key-or-path) vol pitch pan))
 
-(defn ^:export play_me [key-or-path & [vol pitch pan]]
+(defn ^:export playMe [key-or-path & [vol pitch pan]]
   (audio3/play-me! (conv-kp key-or-path) vol pitch pan))
 
-(defn ^:export play_se [key-or-path & [vol pitch pan]]
+(defn ^:export playSe [key-or-path & [vol pitch pan]]
   (audio3/play-se! (conv-kp key-or-path) vol pitch pan))
 
 (defn ^:export alarm [key-or-path & [vol pitch pan]]
@@ -83,36 +83,36 @@
 
 
 
-(defn ^:export is_playing_bgm [] (audio3/playing-bgm?))
-(defn ^:export is_playing_bgs [] (audio3/playing-bgs?))
-(defn ^:export is_playing_me [] (audio3/playing-me?))
+(defn ^:export isPlayingBgm [] (audio3/playing-bgm?))
+(defn ^:export isPlayingBgs [] (audio3/playing-bgs?))
+(defn ^:export isPlayingMe [] (audio3/playing-me?))
 
 
-(defn ^:export preload_bgm [key-or-path]
+(defn ^:export preloadBgm [key-or-path]
   (audio3/preload-bgm! (conv-kp key-or-path)))
-(def ^:export preload_bgs preload_bgm)
-(def ^:export preload_me preload_bgm)
+(def ^:export preloadBgs preload_bgm)
+(def ^:export preloadMe preload_bgm)
 
-(defn ^:export unload_bgm [key-or-path]
+(defn ^:export unloadBgm [key-or-path]
   (audio3/unload-bgm! (conv-kp key-or-path)))
-(def ^:export unload_bgs unload_bgm)
-(def ^:export unload_me unload_bgm)
+(def ^:export unloadBgs unload_bgm)
+(def ^:export unloadMe unload_bgm)
 
-(defn ^:export is_preloaded_bgm [key-or-path]
+(defn ^:export isPreloadedBgm [key-or-path]
   (audio3/preloaded-bgm? (conv-kp key-or-path)))
-(defn ^:export is_succeeded_to_preload_bgm [key-or-path]
+(defn ^:export isSucceededToPreloadBgm [key-or-path]
   (audio3/succeeded-to-preload-bgm? (conv-kp key-or-path)))
 
 
 
 
-(defn ^:export is_preload_se [key-or-path]
+(defn ^:export isPreloadSe [key-or-path]
   (audio3/preload-se! (conv-kp key-or-path)))
-(defn ^:export is_unload_se [key-or-path]
+(defn ^:export isUnloadSe [key-or-path]
   (audio3/unload-se! (conv-kp key-or-path)))
-(defn ^:export is_loaded_se [key-or-path]
+(defn ^:export isLoadedSe [key-or-path]
   (audio3/loaded-se? (conv-kp key-or-path)))
-(defn ^:export is_succeeded_to_load_se [key-or-path]
+(defn ^:export isSucceededToLoadSe [key-or-path]
   (audio3/succeeded-to-load-se? (conv-kp key-or-path)))
 
 
@@ -124,14 +124,14 @@
 ;; jsでsetを表現しづらいので、これは一旦非公開とする
 ;(def terminal-type util/terminal-type)
 
-(defn ^:export can_play [mime] (audio3/can-play? mime))
-(defn ^:export can_play_ogg [] (audio3/can-play-ogg?))
-(defn ^:export can_play_mp3 [] (audio3/can-play-mp3?))
-(defn ^:export can_play_m4a [] (audio3/can-play-m4a?))
+(defn ^:export canPlay [mime] (audio3/can-play? mime))
+(defn ^:export canPlayOgg [] (audio3/can-play-ogg?))
+(defn ^:export canPlayMp3 [] (audio3/can-play-mp3?))
+(defn ^:export canPlayM4a [] (audio3/can-play-m4a?))
 
 ;;; 0.0～1.0 の値と 0～100 のパーセント値を相互変換する。ボリューム値用。
-(def ^:export float2percent audio3/float->percent)
-(def ^:export percent2float audio3/percent->float)
+(def ^:export floatToPercent audio3/float->percent)
+(def ^:export percentToFloat audio3/percent->float)
 
 
 

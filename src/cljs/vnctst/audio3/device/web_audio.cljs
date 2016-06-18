@@ -159,8 +159,10 @@
   (let [buf (:buffer @ch)
         source-node (.createBufferSource @audio-context)
         gain-node (.createGain @audio-context)
-        panner-node (.createPanner @audio-context)
-        ]
+        ;; NB: ここを .createStereoPanner にする案があったが、
+        ;;     webkit系での対応状況が悪いので却下された。
+        ;;     将来に対応が進んだら、再度検討してもよい
+        panner-node (.createPanner @audio-context)]
     (set! (.-buffer source-node) buf)
     (set! (.. source-node -playbackRate -value) pitch)
     (set! (.. gain-node -gain -value) volume)

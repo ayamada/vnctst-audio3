@@ -8,7 +8,8 @@
 (def ^:dynamic p-key :html-audio-single)
 
 (defn- p [& args]
-  (util/logging p-key args))
+  (when entry-table/device-log-verbose?
+    (util/logging p-key args)))
 
 
 ;;; 実装について

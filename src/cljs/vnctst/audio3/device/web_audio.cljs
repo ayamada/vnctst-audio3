@@ -3,7 +3,8 @@
             [vnctst.audio3.util :as util]))
 
 (defn- p [& args]
-  (util/logging :web-audio args))
+  (when entry-table/device-log-verbose?
+    (util/logging :web-audio args)))
 
 
 

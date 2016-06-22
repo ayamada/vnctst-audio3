@@ -4,10 +4,10 @@
             [vnctst.audio3 :as audio3]
             [vnctst.audio3.js :as audio3-js]))
 
+;;; TODO: 特定のボタンを押す事によって、ボタンのラベルをcljs表記かjs表記かを変更できるようにしたい(これを行うには、ラベルおよび実行式をここのモジュールで保持する必要がある)
+;;; TODO: 上記に伴い、表に表示されない「audio3/init!の実行」も表示だけ行っておきたい
 
 
-;;; TODO: ログウィンドウ(高さ一定で、古い行から消えていく)タイプにする？
-;;;       そうすれば、各ボタンやinit!等の実行もログ表示できて分かりやすい
 (defn- display-msg! [msg & more-msgs]
   (when-let [dom (js/document.getElementById "message")]
     (set! (.. dom -textContent) (apply print-str msg more-msgs))))

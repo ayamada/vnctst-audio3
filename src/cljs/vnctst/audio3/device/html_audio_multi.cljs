@@ -3,9 +3,6 @@
             [vnctst.audio3.device.html-audio-single :as html-audio-single]
             [vnctst.audio3.util :as util]))
 
-(defn- p [& args]
-  (util/logging :html-audio-multi args))
-
 (defn- apply-single-fn [f & args]
   (binding [html-audio-single/p-key :html-audio-multi]
     (apply f args)))

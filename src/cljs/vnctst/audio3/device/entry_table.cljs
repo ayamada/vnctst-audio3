@@ -1,6 +1,9 @@
 (ns vnctst.audio3.device.entry-table
   (:refer-clojure :exclude [get]))
 
+;;; これをtrueにすると、verboseなデバイス関数実行ログが出力されるようになる
+(def device-log-verbose? false)
+
 (defonce entry-table (atom {}))
 
 

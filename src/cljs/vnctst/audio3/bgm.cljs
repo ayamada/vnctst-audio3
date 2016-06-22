@@ -55,6 +55,20 @@
 (defonce bgm-me-state (atom nil))
 (defonce bgs-state (atom nil))
 
+
+;;; 基本的に、stateのある時は再生中相当。
+;;; (フェード中や再生前ロード中も「再生中」に相当させたい為)
+(defn- _playing-bgm? [state]
+  (when-let [ac (:ac (:current-param @state))]
+    ;; NB: MEのみ、acが存在して再生終了状態になっているケースがあるので、
+    ;;     きちんと調べる
+    (boolean (device/bgm-call! :playing? ac))))
+(defn playing-bgm? [] (_playing-bgm? bgm-me-state))
+(defn playing-bgs? [] (_playing-bgm? bgs-state))
+(defn playing-me? [] (_playing-bgm? bgm-me-state))
+
+
+
 ;;; バックグラウンド復帰の再生ポイント記録用
 (defonce bgm-resume-pos (atom nil))
 (defonce bgs-resume-pos (atom nil))
@@ -455,25 +469,30 @@
 
 
 
-;;; バックグラウンドに入ったので、再生を停止する
+;;; バックグラウンドに入ったので、stateの再生を停止する
 (defn- background-on! [k state pos]
-  ;; web-audioでは、acが存在する=論理再生中、と判定可能
+  ;; acが存在する場合は基本的には論理再生中。
+  ;; ただし、ME再生完了の場合はその限りではなく、個別に対応する必要がある
   (when-let [ac (:ac (:current-param @state))]
-    (reset! pos (device/bgm-call! :pos ac))
-    (device/bgm-call! :stop! ac)))
+    ;; NB: MEのみ、acが存在して再生終了状態になっているケースがある
+    (when (device/bgm-call! :playing? ac)
+      (reset! pos (device/bgm-call! :pos ac))
+      (device/bgm-call! :stop! ac))))
 
 ;;; バックグラウンドが解除されたので、復帰させるべき曲があれば、再生を再開する
 (defn- background-off! [k state pos]
-  (let [param (:current-param @state)]
-    (when-let [ac (:ac param)]
-      (let [vol (:volume param)
-            pitch (:pitch param)
-            pan (:pan param)
-            loop? (:loop? param)
-            [i-vol i-pitch i-pan] (util/calc-internal-params :bgm vol pitch pan)
-            i-vol (* i-vol (:fade-factor @state))]
-        (device/bgm-call! :play! ac @pos loop? i-vol i-pitch i-pan false)
-        (reset! pos 0)))))
+  (when @pos
+    (let [param (:current-param @state)]
+      (when-let [ac (:ac param)]
+        (let [vol (:volume param)
+              pitch (:pitch param)
+              pan (:pan param)
+              loop? (:loop? param)
+              [i-vol i-pitch i-pan] (util/calc-internal-params
+                                      :bgm vol pitch pan)
+              i-vol (* i-vol (:fade-factor @state))]
+          (device/bgm-call! :play! ac @pos loop? i-vol i-pitch i-pan false)
+          (reset! pos nil))))))
 
 (defn- sync-background! [bg?]
   (doseq [[k state pos] [[:bgm-or-me bgm-me-state bgm-resume-pos]
@@ -547,13 +566,5 @@
         (swap! preloaded-handle-table assoc key-or-path #(unload! key-or-path))
         (swap! preload-request-queue
                #(remove (fn [a] (= key-or-path a)) %))))))
-
-
-;;; 基本的に、stateのある時は再生中相当。
-;;; (フェード中や再生前ロード中も「再生中」に相当させたい為)
-(defn- _playing-bgm? [state] (boolean @state))
-(defn playing-bgm? [] (_playing-bgm? bgm-me-state))
-(defn playing-bgs? [] (_playing-bgm? bgs-state))
-(defn playing-me? [] (_playing-bgm? bgm-me-state))
 
 

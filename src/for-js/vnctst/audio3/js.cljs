@@ -90,13 +90,13 @@
 
 (defn ^:export preloadBgm [key-or-path]
   (audio3/preload-bgm! (conv-kp key-or-path)))
-(def ^:export preloadBgs preload_bgm)
-(def ^:export preloadMe preload_bgm)
+(def ^:export preloadBgs preloadBgm)
+(def ^:export preloadMe preloadBgm)
 
 (defn ^:export unloadBgm [key-or-path]
   (audio3/unload-bgm! (conv-kp key-or-path)))
-(def ^:export unloadBgs unload_bgm)
-(def ^:export unloadMe unload_bgm)
+(def ^:export unloadBgs unloadBgm)
+(def ^:export unloadMe unloadBgm)
 
 (defn ^:export isPreloadedBgm [key-or-path]
   (audio3/preloaded-bgm? (conv-kp key-or-path)))

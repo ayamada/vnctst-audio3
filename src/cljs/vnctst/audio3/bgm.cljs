@@ -44,7 +44,7 @@
 
 
 
-;;; bgm-state bgs-state には、 nil もしくは以下のkeyを持つmapが入る
+;;; bgm-me-state bgs-state には、 nil もしくは以下のkeyを持つmapが入る
 ;;; - :fade-factor ; 通常は 1.0、フェード中のみ変化する
 ;;; - :fade-delta ; 通常は0。基本となるフェード量が設定される
 ;;; - :fade-process ; フェードを進めるgoスレッド、通常はnil
@@ -52,7 +52,7 @@
 ;;; - :next-param ; 「次の曲」。内容は :current-param と同様。「ロード中」を
 ;;;   示すのもこれで表現される
 
-(defonce bgm-state (atom nil))
+(defonce bgm-me-state (atom nil))
 (defonce bgs-state (atom nil))
 
 ;;; バックグラウンド復帰の再生ポイント記録用
@@ -88,7 +88,7 @@
             (device/bgm-call! :set-volume! ac i-vol)))))))
 
 (defn sync-bgm-volume! []
-  (sync-volume! bgm-state))
+  (sync-volume! bgm-me-state))
 
 (defn sync-bgs-volume! []
   (sync-volume! bgs-state))
@@ -359,7 +359,7 @@
         pan (or pan 0)
         state (if (= :bgs mode)
                        bgs-state
-                       bgm-state)]
+                       bgm-me-state)]
     (sync-playing-state! state)
     ;; NB: これが呼ばれたタイミングで、どのパターンであっても、
     ;;     とりあえず以前の :next-param は無用になるので消しておく
@@ -430,7 +430,7 @@
 (defn- _stop! [mode fade-sec]
   (let [state (if (= :bgs mode)
                        bgs-state
-                       bgm-state)
+                       bgm-me-state)
         fade-msec (int (* 1000 (or fade-sec default-fade-sec 0)))]
     (sync-playing-state! state)
     (when @state
@@ -476,7 +476,7 @@
         (reset! pos 0)))))
 
 (defn- sync-background! [bg?]
-  (doseq [[k state pos] [[:bgm-or-me bgm-state bgm-resume-pos]
+  (doseq [[k state pos] [[:bgm-or-me bgm-me-state bgm-resume-pos]
                          [:bgs bgs-state bgs-resume-pos]]]
     (if bg?
       (background-on! k state pos)
@@ -530,7 +530,7 @@
 
 (defn unload! [key-or-path]
   ;; 鳴っている最中に呼ばないように、現在再生中の曲なら先に強制停止させる
-  (when (= key-or-path (get-in @bgm-state [:current-param :key]))
+  (when (= key-or-path (get-in @bgm-me-state [:current-param :key]))
     (stop-bgm! key-or-path 0))
   (when (= key-or-path (get-in @bgs-state [:current-param :key]))
     (stop-bgs! key-or-path 0))
@@ -552,8 +552,8 @@
 ;;; 基本的に、stateのある時は再生中相当。
 ;;; (フェード中や再生前ロード中も「再生中」に相当させたい為)
 (defn- _playing-bgm? [state] (boolean @state))
-(defn playing-bgm? [] (_playing-bgm? bgm-state))
+(defn playing-bgm? [] (_playing-bgm? bgm-me-state))
 (defn playing-bgs? [] (_playing-bgm? bgs-state))
-(defn playing-me? [] (_playing-bgm? bgm-state))
+(defn playing-me? [] (_playing-bgm? bgm-me-state))
 
 

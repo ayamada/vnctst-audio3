@@ -78,11 +78,11 @@
                [:div
                 "BGM / ME :"
                 [:br]
-                (demo-button "vnctst.audio3.js.stop_bgm()"
+                (demo-button "vnctst.audio3.js.stopBgm()"
                              "(audio3/stop-bgm!)")
                 " - BGMをフェード停止させる"
                 [:br]
-                (demo-button "vnctst.audio3.js.stop_bgm(0)"
+                (demo-button "vnctst.audio3.js.stopBgm(0)"
                              "(audio3/stop-bgm! 0)")
                 " - BGMを即座に停止させる(引数はフェード秒数)"
                 [:br]
@@ -105,15 +105,15 @@
                 " - \"audio/me/unmei.{ogg,mp3}\" をMEとして再生する。引数は音量(省略時1.0)、ピッチ(再生速度倍率、省略時1.0)、パン(左右に寄せる、省略時0、-1が左最大、1が右最大)"
                 [:br]
                 [:br]
-                (demo-button "vnctst.audio3.js.play_bgm(\"audio/bgm/drop.ogg\")"
+                (demo-button "vnctst.audio3.js.playBgm(\"audio/bgm/drop.ogg\")"
                              "(audio3/play-bgm! \"audio/bgm/drop.ogg\")")
                 " - \"audio/bgm/drop.ogg\" をBGMとして再生する。任意のurlを指定可能(外部サーバを指定する場合は要CORS設定)。この環境でoggが再生可能かどうかは後述の方法で確認可能(確認せずに再生不可な環境で実行してもエラーは投げられず、何も起こらない)"
                 [:br]
-                (demo-button "vnctst.audio3.js.play_bgm(\"audio/bgm/drop.mp3\")"
+                (demo-button "vnctst.audio3.js.playBgm(\"audio/bgm/drop.mp3\")"
                              "(audio3/play-bgm! \"audio/bgm/drop.mp3\")")
                 " - \"audio/bgm/drop.mp3\" をBGMとして再生する"
                 [:br]
-                (demo-button "vnctst.audio3.js.play_me(\"audio/me/unmei.ogg\")"
+                (demo-button "vnctst.audio3.js.playMe(\"audio/me/unmei.ogg\")"
                              "(audio3/play-me! \"audio/me/unmei.ogg\")")
                 " - \"audio/me/unmei.ogg\" をMEとして再生する"
                 ]
@@ -122,13 +122,13 @@
                [:div
                 "BGS :"
                 [:br]
-                (demo-button "vnctst.audio3.js.stop_bgs()"
+                (demo-button "vnctst.audio3.js.stopBgs()"
                              "(audio3/stop-bgs!)")
                 " - BGSをフェード停止させる"
                 [:br]
-                (demo-button "vnctst.audio3.js.stop_bgs(0)"
+                (demo-button "vnctst.audio3.js.stopBgs(0)"
                              "(audio3/stop-bgs! 0)")
-                " - BGMを即座に停止させる(引数はフェード秒数)"
+                " - BGSを即座に停止させる(引数はフェード秒数)"
                 [:br]
                 [:br]
                 (demo-button "vnctst.audio3.js.play({bgs: 'noise'})"
@@ -149,7 +149,7 @@
                 " - \"audio/se/yarare.{ogg,mp3}\" をSEとして再生する"
                 [:br]
                 [:br]
-                (demo-button "vnctst.audio3.js.play_se(\"audio/se/yarare.ogg\")"
+                (demo-button "vnctst.audio3.js.playSe(\"audio/se/yarare.ogg\")"
                              "(audio3/play-se! \"audio/se/yarare.ogg\")")
                 " - \"audio/se/yarare.ogg\" をSEとして再生する"
                 ]
@@ -158,28 +158,28 @@
                [:div
                 "Misc :"
                 [:br]
-                (demo-button "vnctst.audio3.js.set_volume_master(0.25)"
+                (demo-button "vnctst.audio3.js.setVolumeMaster(0.25)"
                              "(audio3/set-volume-master! 0.25)")
                 " - マスター音量を25%に設定する(音量値は0.0～1.0の範囲、初期値は0.5)"
                 [:br]
-                (demo-button "vnctst.audio3.js.set_volume_master(0.5)"
+                (demo-button "vnctst.audio3.js.setVolumeMaster(0.5)"
                              "(audio3/set-volume-master! 0.5)")
                 " - マスター音量を50%に設定する"
                 [:br]
-                (demo-button "vnctst.audio3.js.set_volume_master(1.0)"
+                (demo-button "vnctst.audio3.js.setVolumeMaster(1.0)"
                              "(audio3/set-volume-master! 1.0)")
                 " - マスター音量を100%に設定する"
                 [:br]
                 [:br]
-                (demo-button "alert(vnctst.audio3.js.can_play_ogg())"
+                (demo-button "alert(vnctst.audio3.js.canPlayOgg())"
                              "(audio3/can-play-ogg?)")
                 " - oggが再生可能なら真値を返す"
                 [:br]
-                (demo-button "alert(vnctst.audio3.js.can_play_mp3())"
+                (demo-button "alert(vnctst.audio3.js.canPlayMp3())"
                              "(audio3/can-play-mp3?)")
                 " - mp3が再生可能なら真値を返す"
                 [:br]
-                (demo-button "alert(vnctst.audio3.js.can_play_m4a())"
+                (demo-button "alert(vnctst.audio3.js.canPlayM4a())"
                              "(audio3/can-play-m4a?)")
                 " - m4aが再生可能なら真値を返す"
                 ]

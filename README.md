@@ -71,7 +71,7 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
 
 - cljs環境向け。しかし実験的にjs向けデプロイも行っている
 
-- このライブラリ自体のライセンスは[zlib](https://ja.wikipedia.org/wiki/Zlib_License)風ライセンス。ライセンス条文等を表示しなくてよい
+- ライセンスに[zlib](https://ja.wikipedia.org/wiki/Zlib_License)風ライセンスを採用。ライセンス条文等を表示したりしなくてよい
 
 
 # オンラインデモ

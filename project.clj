@@ -28,19 +28,22 @@
           :pretty-print true
           }))
 
+;(def figwheel-version "0.5.4-4") ; Build Id Error: "demo-dev" is not a build-id in your configuration. というエラーが出たのでバージョン上げは延期
+(def figwheel-version "0.5.4-3")
+
 (def plugins-cljs-prod '[[lein-cljsbuild "1.1.3"]])
 
 (def plugins-cljs-dev (vec (concat plugins-cljs-prod
-                                   '[[lein-figwheel "0.5.4-3"]])))
+                                   [['lein-figwheel figwheel-version]])))
 
 (def dependencies-cljs-prod
   '[[org.clojure/clojure "1.8.0"]
-    [org.clojure/clojurescript "1.9.88"]
+    [org.clojure/clojurescript "1.9.92"]
     [jp.ne.tir/project-clj "0.1.6"]])
 
 (def dependencies-cljs-dev
   (vec (concat dependencies-cljs-prod
-               '[[figwheel "0.5.4-3"]])))
+               [['figwheel figwheel-version]])))
 
 
 (defproject jp.ne.tir/vnctst-audio3 "0.1.0-SNAPSHOT"

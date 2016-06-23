@@ -7,6 +7,11 @@
 ;;; TODO: 特定のボタンを押す事によって、ボタンのラベルをcljs表記かjs表記かを変更できるようにしたい(これを行うには、ラベルおよび実行式をここのモジュールで保持する必要がある)
 ;;; TODO: 上記に伴い、表に表示されない「audio3/init!の実行」も表示だけ行っておきたい
 
+;;; 上記を実現するにあたって、とりあえずラベルの定義だけ先にしておく
+(def hoge
+  {
+   })
+
 
 (defn- display-msg! [msg & more-msgs]
   (when-let [dom (js/document.getElementById "message")]

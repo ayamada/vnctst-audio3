@@ -50,8 +50,8 @@
   :min-lein-version "2.5.0"
   :description "audio playback library for html5 game"
   :url "https://github.com/ayamada/vnctst-audio3"
-  :license {:name "MIT License"
-            :url "http://opensource.org/licenses/MIT"}
+  :license {:name "zlib License"
+            :url "https://opensource.org/licenses/Zlib"}
   :dependencies [[org.clojure/core.async "0.2.385"]]
   :source-paths ["src/cljs"]
   :clean-targets ^{:protect false} [:target-path

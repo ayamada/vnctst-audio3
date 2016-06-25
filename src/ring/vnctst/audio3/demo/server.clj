@@ -30,8 +30,10 @@
 (def ^:private bg-color "#BFBFBF")
 (def ^:private pressed-bg-color "#BFBFBF")
 
-(defn- demo-button [onclick label]
-  [:button {:onclick onclick} label])
+(defn- demo-button [id]
+  (let [id (name id)
+        desc-id (str (name id) "-desc")]
+    [:span [:button {:id id} " "] " - " [:span {:id desc-id} " "]]))
 
 (defn render-app [req]
   (let [github-url "https://github.com/ayamada/vnctst-audio3"
@@ -54,7 +56,8 @@
               [:title title]
               ;[:link {:href "css/reset.css", :rel "stylesheet", :type "text/css"}]
               ;[:link {:href (prevent-cache "css/default.css"), :rel "stylesheet", :type "text/css"}]
-              ;[:style {:type "text/css"} ""]
+              [:style {:type "text/css"}
+               "button {font-family:monospace; padding:0.5em; margin:0.2em}"]
               ]
              [:body
               {:onload "vnctst.audio3.demo.bootstrap()"}
@@ -74,114 +77,85 @@
               [:div#main {:style "display: none"}
                [:div#version "Version:"]
                [:hr]
+               ;; init実行時の情報表示
+               [:div
+                [:span "以下の引数で初期化を実行しました："]
+                [:br]
+                [:code#init-info "(init-info)"]]
+               [:hr]
+               ;; cljs/js切り替えボタン
+               [:div
+                [:button {:onclick "vnctst.audio3.demo.jsmode(false)"} "cljs向けの表示にする"]
+                [:br]
+                [:button {:onclick "vnctst.audio3.demo.jsmode(true)"} "js向けの表示にする"]
+                ]
+               [:hr]
                ;; BGM/ME
                [:div
                 "BGM / ME :"
                 [:br]
-                (demo-button "vnctst.audio3.js.stopBgm()"
-                             "(audio3/stop-bgm!)")
-                " - BGMをフェード停止させる"
+                (demo-button :stop-bgm)
                 [:br]
-                (demo-button "vnctst.audio3.js.stopBgm(0)"
-                             "(audio3/stop-bgm! 0)")
-                " - BGMを即座に停止させる(引数はフェード秒数)"
+                (demo-button :stop-bgm-0)
                 [:br]
                 [:br]
-                (demo-button "vnctst.audio3.js.play({bgm: 'drop'})"
-                             "(audio3/play! :bgm/drop)")
-                " - \"audio/bgm/drop.{ogg,mp3}\" をBGMとして再生する"
+                (demo-button :play-bgm-drop)
                 [:br]
-                (demo-button "vnctst.audio3.js.play({bgm: 'drop'}, 1.5, 1.2, 0.2)"
-                             "(audio3/play! :bgm/drop 1.5 1.2 0.2)")
-                " - \"audio/bgm/drop.{ogg,mp3}\" をBGMとして再生する。引数は音量(省略時1.0)、ピッチ(再生速度倍率、省略時1.0)、パン(左右に寄せる、省略時0、-1が左最大、1が右最大)"
+                (demo-button :play-bgm-drop-2)
                 [:br]
                 [:br]
-                (demo-button "vnctst.audio3.js.play({me: 'unmei'})"
-                             "(audio3/play! :me/unmei)")
-                " - \"audio/me/unmei.{ogg,mp3}\" をMEとして再生する"
+                (demo-button :play-me-unmei)
                 [:br]
-                (demo-button "vnctst.audio3.js.play({me: 'unmei'}, 1.5, 1.2, 0.2)"
-                             "(audio3/play! :me/unmei 1.5 1.2 0.2)")
-                " - \"audio/me/unmei.{ogg,mp3}\" をMEとして再生する。引数は音量(省略時1.0)、ピッチ(再生速度倍率、省略時1.0)、パン(左右に寄せる、省略時0、-1が左最大、1が右最大)"
+                (demo-button :play-me-unmei-2)
                 [:br]
                 [:br]
-                (demo-button "vnctst.audio3.js.playBgm(\"audio/bgm/drop.ogg\")"
-                             "(audio3/play-bgm! \"audio/bgm/drop.ogg\")")
-                " - \"audio/bgm/drop.ogg\" をBGMとして再生する。任意のurlを指定可能(外部サーバを指定する場合は要CORS設定)。この環境でoggが再生可能かどうかは後述の方法で確認可能(確認せずに再生不可な環境で実行してもエラーは投げられず、何も起こらない)"
+                (demo-button :play-bgm-drop-ogg)
                 [:br]
-                (demo-button "vnctst.audio3.js.playBgm(\"audio/bgm/drop.mp3\")"
-                             "(audio3/play-bgm! \"audio/bgm/drop.mp3\")")
-                " - \"audio/bgm/drop.mp3\" をBGMとして再生する"
+                (demo-button :play-bgm-drop-mp3)
                 [:br]
-                (demo-button "vnctst.audio3.js.playMe(\"audio/me/unmei.ogg\")"
-                             "(audio3/play-me! \"audio/me/unmei.ogg\")")
-                " - \"audio/me/unmei.ogg\" をMEとして再生する"
+                (demo-button :play-me-unmei-ogg)
                 ]
                [:hr]
                ;; BGS
                [:div
                 "BGS :"
                 [:br]
-                (demo-button "vnctst.audio3.js.stopBgs()"
-                             "(audio3/stop-bgs!)")
-                " - BGSをフェード停止させる"
+                (demo-button :stop-bgs)
                 [:br]
-                (demo-button "vnctst.audio3.js.stopBgs(0)"
-                             "(audio3/stop-bgs! 0)")
-                " - BGSを即座に停止させる(引数はフェード秒数)"
+                (demo-button :stop-bgs-0)
                 [:br]
                 [:br]
-                (demo-button "vnctst.audio3.js.play({bgs: 'noise'})"
-                             "(audio3/play! :bgs/noise)")
-                " - \"audio/bgs/noise.{ogg,mp3}\" をBGSとして再生する"
+                (demo-button :play-bgs-noise)
                 ]
                [:hr]
                ;; SE
                [:div
                 "SE :"
                 [:br]
-                (demo-button "vnctst.audio3.js.play({se: 'jump'})"
-                             "(audio3/play! :se/jump)")
-                " - \"audio/se/jump.{ogg,mp3}\" をSEとして再生する。連打での多重再生が可能"
+                (demo-button :play-se-jump)
                 [:br]
-                (demo-button "vnctst.audio3.js.play({se: 'yarare'})"
-                             "(audio3/play! :se/yarare)")
-                " - \"audio/se/yarare.{ogg,mp3}\" をSEとして再生する"
+                (demo-button :play-se-yarare)
                 [:br]
                 [:br]
-                (demo-button "vnctst.audio3.js.playSe(\"audio/se/yarare.ogg\")"
-                             "(audio3/play-se! \"audio/se/yarare.ogg\")")
-                " - \"audio/se/yarare.ogg\" をSEとして再生する"
+                (demo-button :play-se-yarare-ogg)
                 ]
                [:hr]
                ;; misc
                [:div
                 "Misc :"
                 [:br]
-                (demo-button "vnctst.audio3.js.setVolumeMaster(0.25)"
-                             "(audio3/set-volume-master! 0.25)")
-                " - マスター音量を25%に設定する(音量値は0.0～1.0の範囲、初期値は0.5)"
+                (demo-button :set-volume-master-25)
                 [:br]
-                (demo-button "vnctst.audio3.js.setVolumeMaster(0.5)"
-                             "(audio3/set-volume-master! 0.5)")
-                " - マスター音量を50%に設定する"
+                (demo-button :set-volume-master-50)
                 [:br]
-                (demo-button "vnctst.audio3.js.setVolumeMaster(1.0)"
-                             "(audio3/set-volume-master! 1.0)")
-                " - マスター音量を100%に設定する"
+                (demo-button :set-volume-master-100)
                 [:br]
                 [:br]
-                (demo-button "alert(vnctst.audio3.js.canPlayOgg())"
-                             "(audio3/can-play-ogg?)")
-                " - oggが再生可能なら真値を返す"
+                (demo-button :can-play-ogg)
                 [:br]
-                (demo-button "alert(vnctst.audio3.js.canPlayMp3())"
-                             "(audio3/can-play-mp3?)")
-                " - mp3が再生可能なら真値を返す"
+                (demo-button :can-play-mp3)
                 [:br]
-                (demo-button "alert(vnctst.audio3.js.canPlayM4a())"
-                             "(audio3/can-play-m4a?)")
-                " - m4aが再生可能なら真値を返す"
+                (demo-button :can-play-m4a)
                 ]
                ;; footer
                [:hr]

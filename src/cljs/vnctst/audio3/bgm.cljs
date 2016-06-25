@@ -416,13 +416,16 @@
 
 
 (defn play-bgm! [key-or-path vol pitch pan]
-  (_play! :bgm key-or-path vol pitch pan true))
+  (_play! :bgm key-or-path vol pitch pan true)
+  true)
 
 (defn play-bgs! [key-or-path vol pitch pan]
-  (_play! :bgs key-or-path vol pitch pan true))
+  (_play! :bgs key-or-path vol pitch pan true)
+  true)
 
 (defn play-me! [key-or-path vol pitch pan]
-  (_play! :me key-or-path vol pitch pan false))
+  (_play! :me key-or-path vol pitch pan false)
+  true)
 
 
 

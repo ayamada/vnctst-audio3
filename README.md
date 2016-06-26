@@ -142,7 +142,7 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
         - どちらになるかは、oggが再生可能なら前者、そうでなければ後者となる
         - ここで実際に展開されるpath位置やogg再生不可時の拡張子等は、前述の `init!` のオプション値によって変更可能
         - もちろん、 `"audio/bgm/hoge.ogg"` と `"audio/bgm/hoge.mp3"` の両方のファイルを事前に設置しておく必要がある(片方だけでは駄目。ただし後述のcordova等で再生ブラウザ環境が固定できる場合、oggのみにする事は可能)。
-    - プリセットのキーの`namespace`部(キーワードのスラッシュ以前の部分)に指定できるのは `bgm` `se` bgs` `me` の四種類だけ。つまり `"audio/bgm/"` `"audio/se/"` `"audio/bgs/"` `"audio/me/"` の中に設置した音源ファイルのみがプリセット指定する事が可能となる(ここ以外に設置したファイルは文字列でのpath指定にするしかない)
+    - プリセットのキーの`namespace`部(キーワードのスラッシュ以前の部分)に指定できるのは `bgm` `se` `bgs` `me` の四種類だけ。つまり `"audio/bgm/"` `"audio/se/"` `"audio/bgs/"` `"audio/me/"` の中に設置した音源ファイルのみがプリセット指定する事が可能となる(ここ以外に設置したファイルは文字列でのpath指定にするしかない)
 
 - `(audio3/play! :se/fuga)`
     - 上記同様に `(audio3/play-se! "audio/se/fuga.ogg")` もしくは `(audio3/play-se! "audio/se/fuga.mp3")` として実行される
@@ -528,7 +528,7 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
         - どちらになるかは、oggが再生可能なら前者、そうでなければ後者となる
         - ここで実際に展開されるpath位置やogg再生不可時の拡張子等は、前述の `init()` のオプション値によって変更可能
         - もちろん、 `"audio/bgm/hoge.ogg"` と `"audio/bgm/hoge.mp3"` の両方のファイルを事前に設置しておく必要がある(片方だけでは駄目。ただし後述のcordova等で再生ブラウザ環境が固定できる場合、oggのみにする事は可能)。
-    - プリセットのkey部に指定できるのは `bgm` `se` bgs` `me` の四種類だけ。つまり `"audio/bgm/"` `"audio/se/"` `"audio/bgs/"` `"audio/me/"` の中に設置した音源ファイルのみがプリセット指定する事が可能となる(ここ以外に設置したファイルは文字列でのpath指定にするしかない)
+    - プリセットのkey部に指定できるのは `bgm` `se` `bgs` `me` の四種類だけ。つまり `"audio/bgm/"` `"audio/se/"` `"audio/bgs/"` `"audio/me/"` の中に設置した音源ファイルのみがプリセット指定する事が可能となる(ここ以外に設置したファイルは文字列でのpath指定にするしかない)
 
 - `vnctst.audio3.js.play({se:"fuga"});`
     - 上記同様に `vnctst.audio3.js.playSe("audio/se/fuga.ogg");` もしくは `vnctst.audio3.js.playSe({"audio/se/fuga.mp3");` として実行される

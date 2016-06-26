@@ -18,7 +18,7 @@
 
 ## 用語/概念
 
-- BGM, BGS, ME, SE : [README.md](README.md) を参照。
+- BGM, BGS, ME, SE : [README.md の特徴セクション](README.md#特徴)を参照。
     - なお、単に「BGM」と言った場合でも、BGMだけでなくBGSとMEを含む意味で言っているケースがある(内部処理の分類としては「BGM/BGS/ME」「SE」の二種に分かれる為)。
 
 - device, (再生)デバイス : 物理的なデバイスではなく、WebAudioやHtmlAudio等(のラッパー層)を指す語。

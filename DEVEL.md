@@ -10,7 +10,7 @@ TODO: 先にブログの記事として上げて、そこへのリンクを貼�
 
 ## 開発手順
 
-http://vnctst.tir.jp/vnctst-audio3-demo/ の動作デモを使って開発や動作確認を行う。
+オンラインデモ( http://vnctst.tir.jp/vnctst-audio3-demo/ に設置しているもの)をローカルで動かし、開発や動作確認を行う。
 
 1. ringサーバを起動する
     - `lein with-profile ring ring server-headless` を別コンソールで実行
@@ -36,14 +36,14 @@ http://vnctst.tir.jp/vnctst-audio3-demo/ の動作デモを使って開発や動
 4. このタイミングで一度コミットしておく。
     - コミットメッセージは `'Releasing 0.1.2'` とかで。
 
-5. 動作デモのリリースビルドを生成し、運用サーバにデプロイする
+5. オンラインデモのリリースビルドを生成し、運用サーバにデプロイする
     - 詳細は後述セクション参照
 
 6. js向け配布物である `vnctst-audio3.js` もビルドする
     - `lein clean && lein with-profile for-js cljsbuild once for-js`
     - ビルドしたら忘れずにコミットしておく事。
         - コミットメッセージは上記同様 `'Releasing 0.1.2'` とかでよい
-          (バージョン番号を書いておいた方が分かりやすい)
+          (バージョン番号をコミットログに含めておいた方が後で分かりやすい)
 
 7. clojarsにデプロイする
     - `lein deploy clojars`
@@ -61,12 +61,12 @@ http://vnctst.tir.jp/vnctst-audio3-demo/ の動作デモを使って開発や動
     - `git push && git push origin --tags`
 
 
-## 動作デモのリリースビルド生成およびデプロイ手順
+## オンラインデモのリリースビルド生成およびデプロイ手順
 
 この作業は @ayamada しか行わない筈です。
 なので @ayamada の環境にものすごく依存しています(ssh設定やローカルコマンド等)。
 
-あくまで「動作デモ」単体でのリリースビルドおよびデプロイです。
+あくまで「オンラインデモ」単体でのリリースビルドおよびデプロイです。
 配布物のリリースビルド生成ではない点に一応注意。
 
 1. リリース版のcljsコンパイル

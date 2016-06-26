@@ -837,8 +837,8 @@ TODO: もっとあった筈なので、あとで追記する
     - これは可能ならきちんと対応させたい。あとで調べる。
 
 - BGM系のプリロード関連の関数名にいまいち分かりづらい点がある
-    - `audio3/preload-bgm!` `audio3/preloaded-bgm?` `audio3/succeeded-to-preload-bgm?` `audio3/unload-bgm!` は、BGM/BGS/ME共用というのが分かりづらい
-    - その一方、 `audio3/playing-bgm?` と `audio3/playing-bgs?` は分かれている
+    - `preload-bgm!` `preloaded-bgm?` `succeeded-to-preload-bgm?` `unload-bgm!` は、BGM/BGS/ME共用というのが分かりづらい
+    - その一方、 `playing-bgm?` と `playing-bgs?` は分かれている
     - これについては、もうちょっと良い分け方がないかどうか考えたい。しかしこれは単に「分かりづらい」というだけで、利用上の問題はないので修正するかは未定
     - 「RPGツクール風の再生分類を採用」したのが、そもそもの間違いだった可能性はある…しかし、これはこれで扱いやすいとは思うのだが
 

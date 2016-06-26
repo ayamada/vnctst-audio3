@@ -199,6 +199,10 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
     - `audio3/play-se!` (および `audio3/play!` にて `:se/*` 系を指定した場合)は再生ごとのチャンネルを返す。 `audio3/stop-se!` には、この再生チャンネルを引数として渡す必要がある
     - 既に再生完了したチャンネルを `audio3/stop-se!` に渡しても、何も起こらない
 
+- BGMが再生中かどうかを調べる
+    - `(audio3/playing-bgm?)`
+        - BGM, MEが再生中なら真値を返す
+
 
 ## BGSを使う
 
@@ -208,6 +212,10 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
     - `(audio3/play! :bgs/foo)`
     - `(audio3/stop-bgs!)`
     - 追加の引数についてはBGMと同じ
+
+- BGSが再生中かどうかを調べる
+    - `(audio3/playing-bgs?)`
+        - BGSが再生中なら真値を返す
 
 
 ## プリロードを使う
@@ -257,12 +265,6 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
     - `(audio3/unload-bgm! "path/to/hoge.ogg")`
     - `(audio3/unload-bgm! :bgm/hoge)`
     - これもSEのものとほぼ同様。
-
-- BGM系が再生中かどうかを調べる
-    - `(audio3/playing-bgm?)`
-        - BGM, MEが再生中なら真値を返します
-    - `(audio3/playing-bgs?)`
-        - BGSが再生中なら真値を返します
 
 
 ## プリセットのプリロード
@@ -585,6 +587,10 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
     - `vnctst.audio3.js.playSe()` (および `vnctst.audio3.js.play()` にて `{se:"..."}` 系を指定した場合)は再生ごとのチャンネルを返す。 `vnctst.audio3.js.stopSe()` には、この再生チャンネルを引数として渡す必要がある
     - 既に再生完了したチャンネルを `vnctst.audio3.js.stopSe()` に渡しても、何も起こらない
 
+- BGMが再生中かどうかを調べる
+    - `vnctst.audio3.js.isPlayingBgm()`
+        - BGM, MEが再生中なら真値を返す
+
 
 ## BGSを使う
 
@@ -594,6 +600,10 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
     - `vnctst.audio3.js.play({bgs:"foo"})`
     - `vnctst.audio3.js.stopBgs()`
     - 追加の引数についてはBGMと同じ
+
+- BGSが再生中かどうかを調べる
+    - `vnctst.audio3.js.isPlayingBgs()`
+        - BGSが再生中なら真値を返す
 
 
 ## プリロードを使う
@@ -643,12 +653,6 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
     - `vnctst.audio3.js.unloadBgm("path/to/hoge.ogg")`
     - `vnctst.audio3.js.unloadBgm({bgm:"hoge"})`
     - これもSEのものとほぼ同様。
-
-- BGM系が再生中かどうかを調べる
-    - `vnctst.audio3.js.isPlayingBgm()`
-        - BGM, MEが再生中なら真値を返します
-    - `vnctst.audio3.js.isPlayingBgs()`
-        - BGSが再生中なら真値を返します
 
 
 ## プリセットのプリロード

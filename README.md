@@ -478,7 +478,7 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
 2. htmlから `<script src="vnctst-audio3.js" type="text/javascript"></script>` でファイルをロードする
     - 前述の通りファイルサイズが大きい為、このscriptタグを入れるのはbodyの最後にして、ロードが完了するまではLOADING表示を出す等の対応をした方がより良い
 3. `vnctst.audio3.js.init()` を実行する
-    - `vnctst.audio3.js.init({...});` のように引数を与える事で挙動をカスタマイズ可能(省略可)。パラメータは以下の通り
+    - `vnctst.audio3.js.init({...})` のように引数を与える事で挙動をカスタマイズ可能(省略可)。パラメータは以下の通り
         -  `"fallback-ext": "拡張子"` - プリセット音源(後述)はoggを優先しますが、oggが再生できない場合の拡張子を指定します。省略時は `"mp3"` です。ツクールMV準拠にしたい場合は `"m4a"` にするとよいでしょう。
         - `"url-prefix": "path/to/audio/"` - プリセット音源(後述)の配置urlのprefixを指定します。省略時は `"audio/"` です。通常用途では、末尾のスラッシュは必須です。通常はこれを変更する事はありません。
         -  `"dont-stop-on-background?": 真偽値` - デフォルトでは、ページのタブがバックグラウンドになった場合に自動的にBGMを一時停止します(一部、対応していないブラウザもあります)。真値を指定する事でこの挙動を無効化できます。
@@ -486,34 +486,34 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
         -  `"debug?": 真偽値` - 真値を指定する事で、再生動作の呼び出しや、ファイルのロードエラー等の各種情報をコンソールに出力するようになります。当ライブラリは基本的にエラーがあっても例外は投げないポリシーとしている為、エラーの検知にはこのオプションの設定が必須です。デバッグビルドでは真に、リリースビルドでは偽になるように上手く設定するとよいでしょう。
         -  `"never-use-webaudio?": 真偽値` - WebAudioを常に無効化したい(つまりHtmlAudioのみ使うようにしたい)時に真値を指定します。これは基本的には当ライブラリの開発者向けの機能です。
 
-なお `vnctst.audio3.js.init();` が長くて嫌な場合は `var va3 = vnctst.audio3.js;` を実行しておけば `va3.init();` で実行できます。これは`init()`以外でも同様です。
+なお `vnctst.audio3.js.init()` が長くて嫌な場合は `var va3 = vnctst.audio3.js` を実行しておけば `va3.init()` で実行できます。これは`init()`以外でも同様です。
 
 
 ## 最も単純な使い方
 
 - BGMを鳴らす(停止させるまでループ再生し続ける)
-    - `vnctst.audio3.js.playBgm("path/to/hoge.ogg");`
+    - `vnctst.audio3.js.playBgm("path/to/hoge.ogg")`
         - urlも指定可能だが、その場合は[CORS設定](https://www.google.com/search?nfpr=1&q=CORS)が必要となるケースがある事に注意。
         - ブラウザからローカルhtmlファイルを直に開いた場合は上手く再生できない(これはどの再生ライブラリでも同じ)。何らかのhttpサーバ越しにアクセスする事。
 
 - ME(非ループ曲)を再生する(曲の最後に到達したらそのまま再生を終了する)
-    - `vnctst.audio3.js.playMe("path/to/fuga.ogg");`
+    - `vnctst.audio3.js.playMe("path/to/fuga.ogg")`
 
 - 今鳴らしているBGM/MEをフェードアウトさせて(もしくは即座に)停止する
-    - `vnctst.audio3.js.stopBgm();` フェードアウト1秒(デフォルト値)かけて停止
-    - `vnctst.audio3.js.stopBgm(3);` フェードアウト3秒かけて停止
-    - `vnctst.audio3.js.stopBgm(0);` 即座に停止
+    - `vnctst.audio3.js.stopBgm()` フェードアウト1秒(デフォルト値)かけて停止
+    - `vnctst.audio3.js.stopBgm(3)` フェードアウト3秒かけて停止
+    - `vnctst.audio3.js.stopBgm(0)` 即座に停止
     - 既にBGMが停止状態の時は何も起こらない
     - 既にBGMがフェード中の時も基本的には何も起こらない。が、指定秒数が違う時のみ設定が上書きされる(適切に、フェードのまだ残っている部分が新しいフェード速度へと変更される)
 
 - 今鳴っているBGMをフェードアウト終了させてから次の曲を再生する
-    - `vnctst.audio3.js.playBgm("path/to/foo.ogg");`
+    - `vnctst.audio3.js.playBgm("path/to/foo.ogg")`
         - これは上の「BGMを鳴らす」のと全く同じコードだが、これで「現在の曲をフェードアウト終了させてから次の曲を再生する」という挙動となる
         - 現在鳴らしている曲と全く同一の曲が指定された場合は何も起こらない
         - フェードアウト中に別の曲や同一曲の再生要求が行われた場合は、内部で適切に処理される事が保証される(同一曲だった場合はフェードインして元に戻る)。この辺りは内部では複雑な状態遷移を持つが、外から利用する際にそれを気にする必要はない。雑に扱ってよい。
 
 - SE(効果音)を鳴らす(複数種類もしくは同一の音源ファイルを多重再生する事が可能)
-    - `vnctst.audio3.js.playSe("path/to/fuga.ogg");`
+    - `vnctst.audio3.js.playSe("path/to/fuga.ogg")`
     - SEはイベント毎に鳴らすケースが多いが、複数のイベントが同時発火して同じ効果音を同時に鳴らしてしまうと、それが重なって結果として音量の増幅が起こり、音割れを起こす事がある。これを防ぐ為に、非常に近いタイムスライス(デフォルトでは50msec以内)での同じ効果音の再生は抑制するようにしている。
 
 
@@ -525,18 +525,18 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
 
 そこで、以下のような指定方法を可能とした。以後ここでは、この指定方法を「プリセット指定」と呼ぶ。
 
-- `vnctst.audio3.js.play({bgm:"hoge"});`
-    - これは `vnctst.audio3.js.playBgm("audio/bgm/hoge.ogg");` もしくは `vnctst.audio3.js.playBgm("audio/bgm/hoge.mp3");` として実行される
+- `vnctst.audio3.js.play({bgm:"hoge"})`
+    - これは `vnctst.audio3.js.playBgm("audio/bgm/hoge.ogg")` もしくは `vnctst.audio3.js.playBgm("audio/bgm/hoge.mp3")` として実行される
         - どちらになるかは、oggが再生可能なら前者、そうでなければ後者となる
         - ここで実際に展開されるpath位置やogg再生不可時の拡張子等は、前述の `init()` のオプション値によって変更可能
         - もちろん、 `"audio/bgm/hoge.ogg"` と `"audio/bgm/hoge.mp3"` の両方のファイルを事前に設置しておく必要がある(片方だけでは駄目。ただし後述のcordova等で再生ブラウザ環境が固定できる場合、oggのみにする事は可能)。
     - プリセットのkey部に指定できるのは `bgm` `se` `bgs` `me` の四種類だけ。つまり `"audio/bgm/"` `"audio/se/"` `"audio/bgs/"` `"audio/me/"` の中に設置した音源ファイルのみがプリセット指定する事が可能となる(ここ以外に設置したファイルは文字列でのpath指定にするしかない)
 
-- `vnctst.audio3.js.play({se:"fuga"});`
-    - 上記同様に `vnctst.audio3.js.playSe("audio/se/fuga.ogg");` もしくは `vnctst.audio3.js.playSe({"audio/se/fuga.mp3");` として実行される
+- `vnctst.audio3.js.play({se:"fuga"})`
+    - 上記同様に `vnctst.audio3.js.playSe("audio/se/fuga.ogg")` もしくは `vnctst.audio3.js.playSe({"audio/se/fuga.mp3")` として実行される
 
-- `vnctst.audio3.js.playMe({se:"fuga"});`
-    - `vnctst.audio3.js.playMe("audio/se/fuga.ogg");` もしくは `vnctst.audio3.js.playMe("audio/se/fuga.mp3");` として実行される
+- `vnctst.audio3.js.playMe({se:"fuga"})`
+    - `vnctst.audio3.js.playMe("audio/se/fuga.ogg")` もしくは `vnctst.audio3.js.playMe("audio/se/fuga.mp3")` として実行される
     - `"audio/se/"` 配下に置いたファイルであっても、SE以外の種別(BGM/BGS/ME)として再生させる事は可能、というサンプル例(ただし、非常に分かりづらい)。
 
 とりあえず、ここまでで「適当に`audio/`配下に配置した音源ファイルをBGMやSEとして一発で再生でき、しかもBGMフェードアウト処理や同一SE多重再生管理を適切に行ってくれる」ものとして利用できる。
@@ -546,12 +546,12 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
 
 - 音量設定を変更/取得する
     - 音量設定値は全て0.0～1.0の数値で表現される。
-    - `vnctst.audio3.js.setVolumeMaster(0.5);`
+    - `vnctst.audio3.js.setVolumeMaster(0.5)`
         - マスターボリュームを設定する。初期値は0.5。
         - マスターボリュームは全体に影響する音量。初期状態の場合、マスターは0.5、個別ボリュームも0.5なので、結果として、何も設定しない場合は最大音量の25%で再生される事になる。
-    - `vnctst.audio3.js.setVolumeBgm(0.5);`
+    - `vnctst.audio3.js.setVolumeBgm(0.5)`
         - BGM/BGS/MEの基本ボリュームを設定する(SE以外は共通)。初期値は0.5。
-    - `vnctst.audio3.js.setVolumeSe(0.5);`
+    - `vnctst.audio3.js.setVolumeSe(0.5)`
         - SEの基本ボリュームを設定する。初期値は0.5。
     - `vnctst.audio3.js.getVolumeMaster()` `=>` 0.0～1.0
         - マスターボリュームを取得する

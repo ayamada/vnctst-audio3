@@ -639,7 +639,7 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
     - `vnctst.audio3.js.preloadBgm("path/to/hoge.ogg")`
     - `vnctst.audio3.js.preloadBgm({bgm:"hoge"})`
     - BGM/BGS/MEはどれも「BGM系」として、プリロード時には全て同じ扱いとなる
-    - 注意点として、BGM系はSEとは違い、単に `playBgm()` 等を実行しただけでは内部キャッシュ状態とはならない。なぜならBGM系は「即座に再生しないといけない」という要件があるケースがあまりなく、また一曲のメモリ消費が大きい場合が多いからである。明示的に `vnctst.audio3.js.preloadBgm()` を実行した時のみ、プリロード状態になる。
+    - 注意点として、BGM系はSEとは違い、単に `playBgm()` 等を実行しただけでは内部キャッシュ状態とはならない。なぜならBGM系は「即座に再生しないといけない」という要件があるケースがあまりなく、また一曲のメモリ消費が大きい場合が多いからである。明示的に `preloadBgm()` を実行した時のみ、プリロード状態になる。
 
 - BGM系のプリロードが完了しているかを調査する
     - `vnctst.audio3.js.isPreloadedBgm("path/to/hoge.ogg")`

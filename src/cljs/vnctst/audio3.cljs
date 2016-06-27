@@ -16,7 +16,7 @@
   (apply common/init! options)
   (apply se/init! options)
   (apply bgm/init! options)
-  nil)
+  true)
 
 
 
@@ -41,20 +41,24 @@
 (defn set-volume-master! [v]
   (state/set! :volume-master (max 0 (min 1 v)))
   (bgm/sync-bgm-volume!)
-  (bgm/sync-bgs-volume!))
+  (bgm/sync-bgs-volume!)
+  true)
 (defn set-volume-bgm! [v]
   (state/set! :volume-bgm (max 0 (min 1 v)))
-  (bgm/sync-bgm-volume!))
+  (bgm/sync-bgm-volume!)
+  true)
 (defn set-volume-bgs! [v]
   (state/set! :volume-bgs (max 0 (min 1 v)))
-  (bgm/sync-bgs-volume!))
+  (bgm/sync-bgs-volume!)
+  true)
 (defn set-volume-me! [v]
   (state/set! :volume-me (max 0 (min 1 v)))
-  (bgm/sync-bgm-volume!))
+  (bgm/sync-bgm-volume!)
+  true)
 (defn set-volume-se! [v]
   (state/set! :volume-se (max 0 (min 1 v)))
   ;; NB: SEのみ、現チャンネルへの反映は不要
-  )
+  true)
 
 
 

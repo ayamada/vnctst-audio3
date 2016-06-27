@@ -233,7 +233,8 @@
             (let [fade-sec (or fade-sec 0)]
               ;; TODO: フェード対応
               ;;       (今はfade-secに関わらず常に即時停止する仕様)
-              (device/se-call! :stop! ac))))))))
+              (device/se-call! :stop! ac))))))
+    true))
 
 
 
@@ -260,7 +261,8 @@
                                  (go-loop []
                                    (when-not (loaded? k)
                                      (<! (async/timeout 333))
-                                     (recur)))))))
+                                     (recur)))))
+    true))
 
 
 
@@ -284,7 +286,8 @@
       (if (contains? @loaded-handle-table key-or-path)
         (swap! loaded-handle-table assoc key-or-path #(unload! key-or-path))
         (swap! preload-request-queue
-               #(remove (fn [a] (= key-or-path a)) %))))))
+               #(remove (fn [a] (= key-or-path a)) %)))))
+  true)
 
 
 

@@ -543,7 +543,8 @@
                                  (go-loop []
                                    (when-not (preloaded? k)
                                      (<! (async/timeout 333))
-                                     (recur)))))))
+                                     (recur)))))
+    true))
 
 
 
@@ -569,6 +570,7 @@
       (if (contains? @preloaded-handle-table key-or-path)
         (swap! preloaded-handle-table assoc key-or-path #(unload! key-or-path))
         (swap! preload-request-queue
-               #(remove (fn [a] (= key-or-path a)) %))))))
+               #(remove (fn [a] (= key-or-path a)) %)))))
+  true)
 
 

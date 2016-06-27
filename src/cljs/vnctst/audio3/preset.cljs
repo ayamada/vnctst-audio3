@@ -21,26 +21,30 @@
     (when-not silent?
       (js/alert e)))
   (doseq [k all-bgm-keys]
-    (bgm/preload! k)))
+    (bgm/preload! k))
+  true)
 
 (defn preload-all-bgs-preset! [& [silent?]]
   (when-let [e all-bgs-errors]
     (when-not silent?
       (js/alert e)))
   (doseq [k all-bgs-keys]
-    (bgm/preload! k)))
+    (bgm/preload! k))
+  true)
 
 (defn preload-all-me-preset! [& [silent?]]
   (when-let [e all-me-errors]
     (when-not silent?
       (js/alert e)))
   (doseq [k all-me-keys]
-    (bgm/preload! k)))
+    (bgm/preload! k))
+  true)
 
 (defn preload-all-se-preset! [& [silent?]]
   (when-let [e all-se-errors]
     (when-not silent?
       (js/alert e)))
   (doseq [k all-se-keys]
-    (se/preload! k)))
+    (se/preload! k))
+  true)
 

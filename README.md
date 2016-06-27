@@ -91,6 +91,7 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
 1. `project.clj` の `:dependencies` に `[jp.ne.tir/vnctst-audio3 "X.Y.Z"]` を追加する
 2. 利用したい名前空間にて `(:require [vnctst.audio3 :as audio3])` みたいな感じで require しておく
 3. `(audio3/init!)` を実行しておく
+    - ※これを実行し忘れていると「`Cannot read property 'x' of null`」みたいなエラーが出て動きません。忘れず実行してください。
     - 以下のキーワード引数を与える事により、挙動をカスタマイズする事が可能(しかし全省略でも問題ない)
         -  `:fallback-ext "拡張子"` - プリセット音源(後述)はoggを優先しますが、oggが再生できない場合の拡張子を指定します。省略時は `"mp3"` です。ツクールMV準拠にしたい場合は `"m4a"` にするとよいでしょう。
         - `:url-prefix "path/to/audio/"` - プリセット音源(後述)の配置urlのprefixを指定します。省略時は `"audio/"` です。通常用途では、末尾のスラッシュは必須です。通常はこれを変更する事はありません。
@@ -478,6 +479,7 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
 2. htmlから `<script src="vnctst-audio3.js" type="text/javascript"></script>` でファイルをロードする
     - 前述の通りファイルサイズが大きい為、このscriptタグを入れるのはbodyの最後にして、ロードが完了するまではLOADING表示を出す等の対応をした方がより良い
 3. `vnctst.audio3.js.init()` を実行する
+    - ※これを実行し忘れていると「`Cannot read property 'x' of null`」みたいなエラーが出て動きません。忘れず実行してください。
     - `vnctst.audio3.js.init({...})` のように引数を与える事で挙動をカスタマイズ可能(省略可)。パラメータは以下の通り
         -  `"fallback-ext": "拡張子"` - プリセット音源(後述)はoggを優先しますが、oggが再生できない場合の拡張子を指定します。省略時は `"mp3"` です。ツクールMV準拠にしたい場合は `"m4a"` にするとよいでしょう。
         - `"url-prefix": "path/to/audio/"` - プリセット音源(後述)の配置urlのprefixを指定します。省略時は `"audio/"` です。通常用途では、末尾のスラッシュは必須です。通常はこれを変更する事はありません。

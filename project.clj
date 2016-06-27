@@ -9,7 +9,7 @@
 
 (def compiler-option-js
   (merge compiler-option-common
-         {:main 'vnctst.audio3
+         {:main 'vnctst.audio3.js
           :output-to "vnctst-audio3.js"}))
 
 (def compiler-option-prod
@@ -38,7 +38,7 @@
 
 (def dependencies-cljs-prod
   '[[org.clojure/clojure "1.8.0"]
-    [org.clojure/clojurescript "1.9.92"]
+    [org.clojure/clojurescript "1.9.93"]
     [jp.ne.tir/project-clj "0.1.6"]])
 
 (def dependencies-cljs-dev

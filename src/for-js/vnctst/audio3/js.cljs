@@ -2,17 +2,13 @@
   (:require-macros [project-clj.core :as project-clj])
   (:require [vnctst.audio3 :as audio3]))
 
+;;; javascript向けのインターフェースを提供する
+;;; - 関数名、変数名をjs風の名前に変更
+;;; - 必要であれば、js向けに、引数/返り値の変換を行う
+;;;   (keywordやmapが扱えない対策として)
+
 
 (def ^:export version (project-clj/get :version))
-
-
-
-;;; javascript向けのインターフェースを提供する
-;;; - js向けに、変数名内の一部の記号などを変更
-;;; - 必要であれば、js向けに、引数/返り値の変換を行う
-;;; - キーワード用のユーティリティを提供する？
-
-
 
 
 (defn ^:export init [& [option]]

@@ -458,7 +458,8 @@
           (swap! state merge {:fade-delta fade-delta
                               ;; ロードをキャンセルする
                               :next-param nil})
-          (run-fader! mode state))))))
+          (run-fader! mode state)))
+      true)))
 
 
 

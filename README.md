@@ -479,6 +479,7 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
 ## 前準備
 
 1. 同梱の [vnctst-audio3.js](vnctst-audio3.js) ファイルを適切な場所に配置する
+    - [Raw](https://raw.githubusercontent.com/ayamada/vnctst-audio3/master/vnctst-audio3.js)のところのリンクからソースがそのまま取得できるので、これを適当に保存してください
 2. htmlから `<script src="vnctst-audio3.js" type="text/javascript"></script>` でファイルをロードする
     - 前述の通りファイルサイズが大きい為、このscriptタグを入れるのはbodyの最後にして、ロードが完了するまではLOADING表示を出す等の対応をした方がより良い
 3. `vnctst.audio3.js.init()` を実行する

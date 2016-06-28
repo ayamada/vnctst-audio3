@@ -48,7 +48,8 @@
                                 "引数は音量(省略時1.0)、"
                                 "ピッチ(再生速度倍率、省略時1.0)、"
                                 "パン(左右に寄せる、省略時0、-1が左最大、"
-                                "1が右最大)")
+                                "1が右最大)。"
+                                "環境によってはピッチ、パンが無効な場合あり")
                      }
    :play-me-unmei {:fn #(vnctst.audio3/play! :me/unmei)
                    :cljs "(vnctst.audio3/play! :me/unmei)"
@@ -63,7 +64,8 @@
                                 "引数は音量(省略時1.0)、"
                                 "ピッチ(再生速度倍率、省略時1.0)、"
                                 "パン(左右に寄せる、省略時0、-1が左最大、"
-                                "1が右最大)")
+                                "1が右最大)。"
+                                "環境によってはピッチ、パンが無効な場合あり")
                      }
    :play-bgm-drop-ogg {:fn #(vnctst.audio3/play-bgm! "audio/bgm/drop.ogg")
                        :cljs "(vnctst.audio3/play-bgm! \"audio/bgm/drop.ogg\")"
@@ -73,12 +75,15 @@
                                   "任意のurlを指定可能"
                                   "(外部サーバ指定時は要CORS設定)。"
                                   "この環境でoggが再生可能かどうかは"
-                                  "後述の方法で確認可能")
+                                  "後述の方法で確認可能。"
+                                  "再生できない環境の場合は何も再生されない。")
                        }
    :play-bgm-drop-mp3 {:fn #(vnctst.audio3/play-bgm! "audio/bgm/drop.mp3")
                        :cljs "(vnctst.audio3/play-bgm! \"audio/bgm/drop.mp3\")"
                        :js "vnctst.audio3.js.playBgm(\"audio/bgm/drop.mp3\")"
-                       :desc "\"audio/bgm/drop.mp3\" をBGMとして再生する"
+                       :desc (str "\"audio/bgm/drop.mp3\" を"
+                                  "BGMとして再生する。"
+                                  "再生できない環境の場合は何も再生されない。")
                        }
    :play-me-unmei-ogg {:fn #(vnctst.audio3/play-me! "audio/me/unmei.ogg")
                        :cljs "(vnctst.audio3/play-me! \"audio/me/unmei.ogg\")"

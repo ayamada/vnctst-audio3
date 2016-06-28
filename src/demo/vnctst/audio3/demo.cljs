@@ -30,6 +30,11 @@
                 :js "vnstst.audio3.js.stopBgm(0)"
                 :desc "BGMを即座に停止させる(引数はフェード秒数)"
                 }
+   :play-bgm-va3 {:fn #(vnctst.audio3/play! :bgm/va3)
+                  :cljs "(vnctst.audio3/play! :bgm/va3)"
+                  :js "vnctst.audio3.js.play({bgm: \"va3\"})"
+                  :desc "\"audio/bgm/va3.{ogg,mp3}\" をBGMとして再生する"
+                  }
    :play-bgm-drop {:fn #(vnctst.audio3/play! :bgm/drop)
                    :cljs "(vnctst.audio3/play! :bgm/drop)"
                    :js "vnctst.audio3.js.play({bgm: \"drop\"})"

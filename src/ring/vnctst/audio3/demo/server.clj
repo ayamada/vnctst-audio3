@@ -71,9 +71,6 @@
               [:h1 title]
               address
               [:div#message "Loading ..."]
-              ;; TODO: 記述が冗長なので、cljs側でボタンを配置するようにしたい
-              ;;       (現状だとラベルがcljs表記でonclickがjs表記なのが嫌。
-              ;;       両方をcljs表記で統合したい)
               [:div#main {:style "display: none"}
                [:div#version "Version:"]
                [:hr]
@@ -98,6 +95,8 @@
                 [:br]
                 (demo-button :stop-bgm-0)
                 [:br]
+                [:br]
+                (demo-button :play-bgm-va3)
                 [:br]
                 (demo-button :play-bgm-drop)
                 [:br]

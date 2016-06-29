@@ -4,6 +4,8 @@
 # vnctst-audio3
 
 [![Clojars Project](https://img.shields.io/clojars/v/jp.ne.tir/vnctst-audio3.svg)](https://clojars.org/jp.ne.tir/vnctst-audio3)
+[![license zlib](https://img.shields.io/badge/license-zlib-blue.svg)](LICENSE)
+[![release version](https://img.shields.io/github/release/ayamada/vnctst-audio3.svg)](https://github.com/ayamada/vnctst-audio3/releases)
 
 html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
 

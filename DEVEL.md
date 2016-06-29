@@ -63,6 +63,13 @@
 11. リポジトリを保存する。この際に、タグの分も送らないといけない点に注意
     - `git push && git push origin --tags`
 
+12. github側にて、リリース版の `vnctst-audio3.js` をダウンロード可能にする。
+    - https://github.com/ayamada/vnctst-audio3/releases にて
+      「Draft a new release」のボタンを押す
+    - さっき振ったタグを選択し、適当にタイトルを入力する
+    - `vnctst-audio3.js` の実ファイルをアップロード欄に追加
+    - 「Publish release」ボタンを押して公開し、ダウンロード可能にする
+
 
 ## オンラインデモのリリースビルド生成およびデプロイ手順
 

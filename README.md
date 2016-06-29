@@ -481,11 +481,14 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
 
 ## 前準備
 
-1. 同梱の [vnctst-audio3.js](vnctst-audio3.js) ファイルを適切な場所に配置する
-    - [Raw](https://raw.githubusercontent.com/ayamada/vnctst-audio3/master/vnctst-audio3.js)のところのリンクからソースがそのまま取得できるので、これを適当に保存してください
-2. htmlから `<script src="vnctst-audio3.js" type="text/javascript"></script>` でファイルをロードする
+1. 同梱の `vnctst-audio3.js` ファイルを適切な場所に配置する
+    - `vnctst-audio3.js` は https://github.com/ayamada/vnctst-audio3/releases からもダウンロードできます
+2. htmlファイルに `<script src="vnctst-audio3.js" type="text/javascript"></script>` タグを入れ、`vnctst-audio3.js`ファイルをロードする
     - 前述の通りファイルサイズが大きい為、このscriptタグを入れるのはbodyの最後にして、ロードが完了するまではLOADING表示を出す等の対応をした方がより良い
-3. `vnctst.audio3.js.init()` を実行する
+3. 何らかのhttpサーバを用意し、そこ経由でhtmlファイルを開く
+    - ローカルhtmlファイルをそのままブラウザで開くと、音響ファイルのロードに失敗する為(これはどの再生ライブラリでも同じ)
+    - httpサーバを用意するのが面倒な場合は、`Dropbox`のpublicフォルダ内のどこかにhtmlファイルを配置し、その公開リンクの方をブラウザで開けば手軽に確認できる。おすすめ。
+4. `vnctst.audio3.js.init()` を実行する
     - ※これを実行し忘れていると「`Cannot read property 'x' of null`」みたいなエラーが出て動きません。忘れず実行してください。
     - `vnctst.audio3.js.init({...})` のように引数を与える事で挙動をカスタマイズ可能(省略可)。パラメータは以下の通り
         -  `"fallback-ext": "拡張子"` - プリセット音源(後述)はoggを優先しますが、oggが再生できない場合の拡張子を指定します。省略時は `"mp3"` です。ツクールMV準拠にしたい場合は `"m4a"` にするとよいでしょう。
@@ -829,7 +832,7 @@ html5上の音響システム固有の、知っておくべき内容のメモ
 
 - 違うドメインにあるファイルを再生する場合は[CORS設定](https://www.google.com/search?nfpr=1&q=CORS)が必要
 
-- ブラウザからローカルファイルを直に開いた場合はまともに機能しない(これはどの音源ライブラリでも同じ)。ローカルで確認する際でも何らかのhttpdサーバが必要になる
+- ブラウザからローカルファイルを直に開いた場合はまともに機能しない(これはどの音源ライブラリでも同じ)。ローカルで確認する際でも何らかのhttpサーバが必要になる
 
 - ブラウザ上のページがバックグラウンドになった際に、jsのタイマー精度が1秒ぐらいに悪くなる(具体的には、jsで`setTimeout(xxx, 10)`とか指定してもxxxが実行されるのは1000msec後とかになる場合がある)
     - これを防止する事は基本的にはできない

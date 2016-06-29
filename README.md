@@ -893,6 +893,8 @@ TODO: もっとあった筈なので、思い出し次第、あとで追記す�
 
 `vnctst-audio3` 自体の開発手順については [DEVEL.md](DEVEL.md) を参照してください。
 
+cljs開発の知識がある事が前提です。
+
 
 # License
 

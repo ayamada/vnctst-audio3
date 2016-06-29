@@ -440,26 +440,27 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
 ;; 個別プリロード/アンロード
 (go
   (audio3/preload-bgm! "path/to/hoge.ogg")
-  (audio3/preload-se! "path/to/fuga.ogg")
+  (audio3/preload-se! :se/beep)
   (<! (async/timeout 10000))
   ;; 先にプリロードしておけば、初回再生時でもロード待ち無しに再生可能
   (audio3/play-bgm! "path/to/hoge.ogg")
-  (audio3/play-se! "path/to/fuga.ogg")
+  (audio3/play! :se/beep)
   (<! (async/timeout 10000))
   ;; 今後もう再生しないなら、アンロードしてメモリを解放しておく
   (audio3/unload-bgm! "path/to/hoge.ogg")
-  (audio3/unload-se! "path/to/fuga.ogg")
+  (audio3/unload-se! :se/beep)
   )
 
-;; その他のユーティリティ
+;; ME再生が終わるまで待つサンプル
 (do
-  (audio3/play! :bgm/bach)
+  (audio3/play! :me/jingle)
   (go-loop []
     (<! (async/timeout 1000))
     (if (audio3/playing-bgm?)
       (recur)
       (js/console.log "Done to play BGM"))))
 
+;; その他のユーティリティ
 (when-not (:mobile audio3/terminal-type)
   (audio3/play! :se/beep))
 ```
@@ -760,20 +761,18 @@ setTimeout(function () { va3.stopSe(ch) }, 500);
 ```
 // 個別プリロード/アンロード
 va3.preloadBgm("path/to/hoge.ogg");
-va3.preloadSe("path/to/fuga.ogg");
+va3.preloadSe({se:"beep"});
 ...
 // 先にプリロードしておけば、初回再生時でもロード待ち無しに再生可能
 va3.playBgm("path/to/hoge.ogg");
-va3.playSe("path/to/fuga.ogg");
+va3.play({se:"beep"});
 ...
 // 今後もう再生しないなら、アンロードしてメモリを解放しておく
 va3.unloadBgm("path/to/hoge.ogg");
-va3.unloadSe("path/to/fuga.ogg");
+va3.unloadSe({se:"beep"});
 
-// その他のユーティリティ
-console.log(va3.version);
-
-va3.play({bgm:"bach"});
+// ME再生が終わるまで待つサンプル
+va3.play({me:"jingle"});
 function supervise() {
   if (va3.isPlayingBgm()) {
     setTimeout(supervise, 1000);
@@ -783,6 +782,9 @@ function supervise() {
   }
 }
 supervise();
+
+// その他のユーティリティ
+console.log(va3.version);
 ```
 
 
@@ -902,6 +904,11 @@ zlib風ライセンスとします。
 
 
 # ChangeLog
+
+<!--
+- 0.1.1 (XXXX-XX-XX)
+    - ドキュメントの修正と追加
+-->
 
 - 0.1.0 (2016-06-29)
     - 一通り動作確認を行ったので、これを公式な初回リリースとする

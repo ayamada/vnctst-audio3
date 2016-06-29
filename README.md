@@ -204,6 +204,7 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
     - `(go (let [se-ch (audio3/play-se! "path/to/fuga.ogg")] (<! (cljs.core.async/timeout 1000)) (audio3/stop-se! se-ch)))`
     - `audio3/play-se!` (および `audio3/play!` にて `:se/*` 系を指定した場合)は再生ごとのチャンネルを返す。 `audio3/stop-se!` には、この再生チャンネルを引数として渡す必要がある
     - 既に再生完了したチャンネルを `audio3/stop-se!` に渡しても、何も起こらない
+    - 途中で停止させる必要がなければ、`play-se!`の返すチャンネルは無視しても問題ない(再生終了後に適切にGCされる)
 
 - BGMが再生中かどうかを調べる
     - `(audio3/playing-bgm?)`
@@ -598,6 +599,7 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
     - `var seCh = vnctst.audio3.js.playSe("path/to/fuga.ogg");` `setTimeout(function () { vnctst.audio3.js.stopSe(seCh) }, 1000);`
     - `vnctst.audio3.js.playSe()` (および `vnctst.audio3.js.play()` にて `{se:"..."}` 系を指定した場合)は再生ごとのチャンネルを返す。 `vnctst.audio3.js.stopSe()` には、この再生チャンネルを引数として渡す必要がある
     - 既に再生完了したチャンネルを `vnctst.audio3.js.stopSe()` に渡しても、何も起こらない
+    - 途中で停止させる必要がなければ、`playSe()`の返すチャンネルは無視しても問題ない(再生終了後に適切にGCされる)
 
 - BGMが再生中かどうかを調べる
     - `vnctst.audio3.js.isPlayingBgm()`

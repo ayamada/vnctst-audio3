@@ -925,10 +925,11 @@ zlib風ライセンスとします。
 
 # ChangeLog
 
-<!--
-- 0.1.1 (XXXX-XX-XX)
+- 0.1.1 (XXXX-XX-XX 次リリース予定)
     - ドキュメントの修正と追加
--->
+    - `all-bgm-keys` `all-bgs-keys` `all-me-keys` `all-se-keys` は、
+      `vec`ではなく`set`として保持するようにした
+      (これにより `(:se/hoge audio3/all-bgm-keys)` で存在チェックができる)
 
 - 0.1.0 (2016-06-29)
     - 一通り動作確認を行ったので、これを公式な初回リリースとする

@@ -57,7 +57,8 @@
               ;[:link {:href "css/reset.css", :rel "stylesheet", :type "text/css"}]
               ;[:link {:href (prevent-cache "css/default.css"), :rel "stylesheet", :type "text/css"}]
               [:style {:type "text/css"}
-               "button {font-family:monospace; padding:0.5em; margin:0.2em}"]
+               "button {font-family:monospace; padding:0.5em; margin:0.2em}\n"
+               "code {padding:0.5em; margin:0.5em}"]
               ]
              [:body
               {:onload "vnctst.audio3.demo.bootstrap()"}

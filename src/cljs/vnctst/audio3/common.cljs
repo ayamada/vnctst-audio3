@@ -61,6 +61,11 @@
         (supervise-background!)))))
 
 
+(defn initialized? []
+  (let [r (boolean (state/get :common-initialized?))]
+    (when-not r
+      (util/logging-force "vnctst.audio3 is not initialized !!!"))
+    r))
 
 
 

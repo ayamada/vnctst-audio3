@@ -65,13 +65,16 @@
 
 
 
+;;; :debug? フラグに関わらず、コンソールにログ出力する
+(defn logging-force [& msgs]
+  (when-let [c (aget js/window "console")]
+    (when (aget c "log")
+      (.log c (apply pr-str msgs)))))
+
 ;;; :debug? フラグがオンの時のみ、コンソールにログ出力する
 (defn logging [& msgs]
   (when (state/get :debug?)
-    (when-let [c (aget js/window "console")]
-      (when (aget c "log")
-        (.log c (apply pr-str msgs))))))
-
+    (apply logging-force msgs)))
 
 
 

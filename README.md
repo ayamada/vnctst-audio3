@@ -98,7 +98,7 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
 1. `project.clj` の `:dependencies` に `[jp.ne.tir/vnctst-audio3 "X.Y.Z"]` を追加する
 2. 利用したい名前空間にて `(:require [vnctst.audio3 :as audio3])` みたいな感じで require しておく
 3. `(audio3/init!)` を実行しておく
-    - ※これを実行し忘れていると「`Cannot read property 'x' of null`」みたいなエラーが出て動きません。忘れず実行してください。
+    - ※これを実行し忘れていると、音源ファイルを再生しようとしても「`vnctst.audio3 is not initialized !!!`」というログをコンソールに出力するだけで何も行いません。忘れず実行してください。
     - 以下のキーワード引数を与える事により、挙動をカスタマイズする事が可能(しかし全省略でも問題ない)
         -  `:fallback-ext "拡張子"`
             - プリセット音源(後述)はoggを優先しますが、oggが再生できない場合の拡張子を指定します。省略時は `"mp3"` です。ツクールMV準拠にしたい場合は `"m4a"` にするとよいでしょう。
@@ -498,7 +498,7 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
     - ローカルhtmlファイルをそのままブラウザで開くと、音響ファイルのロードに失敗する為(これはどの再生ライブラリでも同じ)
     - httpサーバを用意するのが面倒な場合は、[Dropbox](https://www.dropbox.com/ja/)のpublicフォルダ内のどこかにhtmlファイルを配置し、その公開リンクの方をブラウザで開けば手軽に確認できる。おすすめ。
 4. `vnctst.audio3.js.init()` を実行する
-    - ※これを実行し忘れていると「`Cannot read property 'x' of null`」みたいなエラーが出て動きません。忘れず実行してください。
+    - ※これを実行し忘れていると、音源ファイルを再生しようとしても「`vnctst.audio3 is not initialized !!!`」というログをコンソールに出力するだけで何も行いません。忘れず実行してください。
     - `vnctst.audio3.js.init({...})` のように引数を与える事で挙動をカスタマイズ可能(省略可)。パラメータは以下の通り
         -  `"fallback-ext": "拡張子"`
             - プリセット音源(後述)はoggを優先しますが、oggが再生できない場合の拡張子を指定します。省略時は `"mp3"` です。ツクールMV準拠にしたい場合は `"m4a"` にするとよいでしょう。
@@ -931,6 +931,8 @@ zlib風ライセンスとします。
     - `all-bgm-keys` `all-bgs-keys` `all-me-keys` `all-se-keys` は、
       `vec`ではなく`set`として保持するようにした
       (これにより `(:se/hoge audio3/all-bgm-keys)` で存在チェックができる)
+    - `init!` 実行前に `play!` 等を行っても例外を投げないようにした
+      (再生等の本来の機能を何も行わずに、コンソールに「`vnctst.audio3 is not initialized !!!`」と出力するだけの挙動とした)
     - `can-play-ogg?` `can-play-mp3?` `can-play-m4a?` `can-play?` の実行結果を
       memoizeするようにした
     - オンラインデモに簡単な説明文を追加

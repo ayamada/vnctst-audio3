@@ -99,21 +99,23 @@
 
 
 
-(defn can-play? [mime]
-  ;; NB: ここで new Audio() 相当を実行しているが、これはiOSにて問題が出る
-  ;;     場合があるらしい
-  ;;     http://qiita.com/gonshi_com/items/e41dbb80f5eb4c176108
-  ;;     適切に回避する方法があれば回避したいところだが、よく分からない
-  (let [audio-class (or
-                      (aget js/window "Audio")
-                      (aget js/window "webkitAudio"))
-        audio (when audio-class
-                (try
-                  (new audio-class)
-                  (catch :default e
-                    nil)))]
-    (when audio
-      (not (empty? (.canPlayType audio mime))))))
+(def can-play?
+  (memoize
+    (fn [mime]
+      ;; NB: ここで new Audio() 相当を実行しているが、これはiOSにて問題が出る
+      ;;     場合があるらしい
+      ;;     http://qiita.com/gonshi_com/items/e41dbb80f5eb4c176108
+      ;;     適切に回避する方法があれば回避したいところだが、よく分からない
+      (let [audio-class (or
+                          (aget js/window "Audio")
+                          (aget js/window "webkitAudio"))
+            audio (when audio-class
+                    (try
+                      (new audio-class)
+                      (catch :default e
+                        nil)))]
+        (when audio
+          (not (empty? (.canPlayType audio mime))))))))
 
 (defn can-play-ogg? [] (can-play? "audio/ogg"))
 (defn can-play-mp3? [] (can-play? "audio/mpeg"))

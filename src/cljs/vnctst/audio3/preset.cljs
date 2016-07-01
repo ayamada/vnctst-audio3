@@ -17,7 +17,7 @@
 (def all-se-error (m/check-ogg-keys :se "resources/public/audio/se"))
 
 (defn preload-all-bgm-preset! [& [silent?]]
-  (when-let [e all-bgm-errors]
+  (when-let [e all-bgm-error]
     (when-not silent?
       (js/alert e)))
   (doseq [k all-bgm-keys]
@@ -25,7 +25,7 @@
   true)
 
 (defn preload-all-bgs-preset! [& [silent?]]
-  (when-let [e all-bgs-errors]
+  (when-let [e all-bgs-error]
     (when-not silent?
       (js/alert e)))
   (doseq [k all-bgs-keys]
@@ -33,7 +33,7 @@
   true)
 
 (defn preload-all-me-preset! [& [silent?]]
-  (when-let [e all-me-errors]
+  (when-let [e all-me-error]
     (when-not silent?
       (js/alert e)))
   (doseq [k all-me-keys]
@@ -41,7 +41,7 @@
   true)
 
 (defn preload-all-se-preset! [& [silent?]]
-  (when-let [e all-se-errors]
+  (when-let [e all-se-error]
     (when-not silent?
       (js/alert e)))
   (doseq [k all-se-keys]

@@ -930,9 +930,11 @@ zlib風ライセンスとします。
     - ドキュメントの修正と追加
     - `all-bgm-keys` `all-bgs-keys` `all-me-keys` `all-se-keys` は、
       `vec`ではなく`set`として保持するようにした
-      (これにより `(:se/hoge vnctst.audio3/all-bgm-keys)` で存在確認ができる)
+      (これにより `(:se/hoge vnctst.audio3/all-bgm-keys)`
+      みたいにしてキー存在チェックが楽にできる)
     - `init!` 実行前に `play!` 等を行っても例外を投げないようにした
-      (再生等の本来の機能を何も行わずに、コンソールに「`vnctst.audio3 is not initialized !!!`」と出力するだけの挙動とした)
+      (再生等の本来の機能を何も行わずに、コンソールに
+      「`vnctst.audio3 is not initialized !!!`」と出力するだけの挙動とした)
     - `can-play-ogg?` `can-play-mp3?` `can-play-m4a?` `can-play?` の実行結果を
       memoizeするようにした
     - オンラインデモに簡単な説明文を追加

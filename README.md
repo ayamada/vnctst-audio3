@@ -926,6 +926,10 @@ zlib風ライセンスとします。
 
 # ChangeLog
 
+<!--
+- 0.1.2-SNAPSHOT (XXXX-XX-XX 次リリース予定)
+-->
+
 - 0.1.1 (2016-07-02)
     - ドキュメントの修正と追加
     - `all-bgm-keys` `all-bgs-keys` `all-me-keys` `all-se-keys` は、

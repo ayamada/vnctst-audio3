@@ -1,0 +1,12 @@
+language: clojure
+lein: lein2
+jdk:
+  - oraclejdk8
+  - oraclejdk7
+  - openjdk7
+script:
+  - lein2 clean && lein2 with-profile ring ring uberjar
+  - rm -f vnctst-audio3.js && lein2 clean && lein2 with-profile for-js cljsbuild once for-js
+  - lein2 clean && lein2 with-profile demo-prod cljsbuild once demo-prod
+
+# vim:set sw=2 ts=2 sts=2 et:

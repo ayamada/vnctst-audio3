@@ -3,9 +3,10 @@
 
 # vnctst-audio3
 
-[![Clojars Project](https://img.shields.io/clojars/v/jp.ne.tir/vnctst-audio3.svg)](https://clojars.org/jp.ne.tir/vnctst-audio3)
-[![license zlib](https://img.shields.io/badge/license-zlib-blue.svg)](LICENSE)
 [![release version](https://img.shields.io/github/release/ayamada/vnctst-audio3.svg)](https://github.com/ayamada/vnctst-audio3/releases)
+[![Clojars Project](https://img.shields.io/clojars/v/jp.ne.tir/vnctst-audio3.svg)](https://clojars.org/jp.ne.tir/vnctst-audio3)
+[![Build Status](https://travis-ci.org/ayamada/vnctst-audio3.svg?branch=master)](https://travis-ci.org/ayamada/vnctst-audio3)
+[![license zlib](https://img.shields.io/badge/license-zlib-blue.svg)](LICENSE)
 
 html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
 
@@ -930,6 +931,7 @@ zlib風ライセンスとします。
     - `all-bgm-keys` `all-bgs-keys` `all-me-keys` `all-se-keys` は、
       `vec`ではなく`set`として保持するようにした
       (これにより `(:se/hoge audio3/all-bgm-keys)` で存在チェックができる)
+    - travis-ciでの自動ビルド試験を追加
 
 - 0.1.0 (2016-06-29)
     - 一通り動作確認を行ったので、これを公式な初回リリースとする

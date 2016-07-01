@@ -78,7 +78,13 @@
                [:div
                 [:span "以下の引数で初期化を実行しました："]
                 [:br]
-                [:code#init-info "(init-info)"]]
+                [:code#init-info "(init-info)"]
+                [:br]
+                [:br]
+                [:span "以下のプリセットの事前ロードを実行しました："]
+                [:br]
+                [:code#preload-info "(preload-info)"]
+                ]
                [:hr]
                ;; cljs/js切り替えボタン
                [:div
@@ -90,6 +96,12 @@
                ;; BGM/ME
                [:div
                 "BGM / ME :"
+                [:br]
+                "- BGMとして再生された音源はループ再生される(勝手に終了しない)"
+                [:br]
+                "- MEとして再生された音源はループ再生されない"
+                "(曲の最後に到達すると普通に終了する)"
+                [:br]
                 [:br]
                 (demo-button :stop-bgm)
                 [:br]
@@ -119,6 +131,10 @@
                [:div
                 "BGS :"
                 [:br]
+                "- BGSとして再生された音源はBGM同様、ループ再生される。"
+                "BGSの再生/停止はBGM/MEの状態に干渉しない(同時に再生できる)"
+                [:br]
+                [:br]
                 (demo-button :stop-bgs)
                 [:br]
                 (demo-button :stop-bgs-0)
@@ -131,6 +147,10 @@
                [:div
                 "SE :"
                 [:br]
+                "- SEは多数の音源を多重に並列再生できる。"
+                "また、BGM/ME/BGSの状態に干渉しない(同時に再生できる)"
+                [:br]
+                [:br]
                 (demo-button :play-se-jump)
                 [:br]
                 (demo-button :play-se-yarare)
@@ -142,6 +162,7 @@
                ;; misc
                [:div
                 "Misc :"
+                [:br]
                 [:br]
                 (demo-button :set-volume-master-25)
                 [:br]

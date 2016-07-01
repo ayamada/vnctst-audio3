@@ -173,6 +173,20 @@
                      ")")
                 )]
       (set! (.. dom -textContent) msg)))
+  (when-let [dom (js/document.getElementById "preload-info")]
+    (let [msg (string/join (if @display-js-mode? ", " " ")
+                           (map (if @display-js-mode?
+                                  #(str "{"
+                                        (namespace %)
+                                        ":"
+                                        (pr-str (name %))
+                                        "}")
+                                  pr-str)
+                                (concat audio3/preset-bgm-keys
+                                        audio3/preset-me-keys
+                                        audio3/preset-bgs-keys
+                                        audio3/preset-se-keys)))]
+      (set! (.. dom -textContent) msg)))
   (doseq [[k m] (seq button-assign)]
     (when-let [dom (js/document.getElementById (name k))]
       ;(js/addEventListener dom "click" (:fn m))

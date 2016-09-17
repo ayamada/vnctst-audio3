@@ -934,7 +934,7 @@ zlib風ライセンスとします。
     - ドキュメントの修正と追加
     - `all-bgm-keys` `all-bgs-keys` `all-me-keys` `all-se-keys` は、
       `vec`ではなく`set`として保持するようにした
-      (これにより `(:se/hoge vnctst.audio3/all-bgm-keys)`
+      (これにより `(:se/hoge vnctst.audio3/all-se-keys)`
       みたいな感じでキー存在チェックが楽にできる)
     - `init!` 実行前に `play!` 等を行っても例外を投げないようにした
       (再生等の本来の機能を何も行わずに、コンソールに

@@ -215,7 +215,10 @@
   (p 'playing? (:url @ch))
   (and
     ;; :play-start-time がない場合、初回再生前なので停止中
-    (:play-start-time @ch)
+    ;; …という扱いに当初はしていたが、初回再生前＝ロード中であり、
+    ;; ロードが完了すれば再生が開始されるので、再生中扱いとする事にした
+    ;; (そうしないとバックグラウンド時での判定でrace conditionが起こる為)
+    ;(:play-start-time @ch)
     ;; :play-start-time があり、:play-end-timeがある場合、停止中
     ;; :play-start-time があり、:play-end-timeがない場合、再生中
     (not (:play-end-time @ch))))

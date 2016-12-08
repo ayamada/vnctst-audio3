@@ -944,9 +944,10 @@ zlib風ライセンスとします。
     - http://ch.nicovideo.jp/indies-game/blomaga/ar1147258 への対応として、
       `:never-use-htmlaudio-at-mobile?` オプションを追加
     - `play-bgm!` `play-bgs!` `play-me!` `play-se!` を
-      `bgm!` `bgs!` `me!` `se!` へとrenameする。
-      ただし古い方の名前も obsoleted aliases として残す。
-      同様のインターフェースをjs版にも提供。
+      `bgm!` `bgs!` `me!` `se!` へとrename
+      (ただし古い方の名前も obsoleted aliases として残した)
+    - WebAudio環境にて、 `play!` 等の再生指定と同時にバックグラウンド化した際に
+      race conditionによってバックグラウンド状態の判定ミスが発生する問題を修正
 
 - 0.1.1 (2016-07-02)
     - ドキュメントの修正と追加

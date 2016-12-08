@@ -16,13 +16,12 @@
     (state/set! :in-background?
                 (boolean (= js/document.visibilityState "hidden")))
     (let [event-name "visibilitychange"
-          h (atom nil)]
-      (reset! h (fn [e]
+          h (fn [e]
                   (let [bg? (boolean (= js/document.visibilityState "hidden"))]
                     (state/set! :in-background? bg?)
                     (when @background-handle
-                      (@background-handle bg?)))))
-      (js/document.addEventListener event-name @h))))
+                      (@background-handle bg?))))]
+      (js/document.addEventListener event-name h))))
 
 
 

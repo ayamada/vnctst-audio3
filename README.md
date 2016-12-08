@@ -932,6 +932,7 @@ zlib風ライセンスとします。
 -->
 
 - 0.1.2-SNAPSHOT (2016-12-09)
+    - dependenciesのバージョン上げ
     - ドキュメントの修正と追加
     - `play-bgm!` `play-bgs!` `play-me!` `play-se!` を
       `bgm!` `bgs!` `me!` `se!` へとrenameする。

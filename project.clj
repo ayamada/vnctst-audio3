@@ -10,11 +10,14 @@
 (def compiler-option-js
   (merge compiler-option-common
          {:main 'vnctst.audio3.js
+          :output-dir "target/out-js" ; unused
           :output-to "vnctst-audio3.js"}))
 
 (def compiler-option-prod
   (merge compiler-option-common
-         {:main 'vnctst.audio3.demo}))
+         {:main 'vnctst.audio3.demo
+          :output-dir "target/out-prod" ; unused
+          }))
 
 (def compiler-option-dev
   (merge compiler-option-common
@@ -28,17 +31,16 @@
           :pretty-print true
           }))
 
-;(def figwheel-version "0.5.4-4") ; Build Id Error: "demo-dev" is not a build-id in your configuration. というエラーが出たのでバージョン上げは延期
-(def figwheel-version "0.5.4-3")
+(def figwheel-version "0.5.8")
 
-(def plugins-cljs-prod '[[lein-cljsbuild "1.1.3"]])
+(def plugins-cljs-prod '[[lein-cljsbuild "1.1.5"]])
 
 (def plugins-cljs-dev (vec (concat plugins-cljs-prod
                                    [['lein-figwheel figwheel-version]])))
 
 (def dependencies-cljs-prod
   '[[org.clojure/clojure "1.8.0"]
-    [org.clojure/clojurescript "1.9.93"]
+    [org.clojure/clojurescript "1.9.293"]
     [jp.ne.tir/project-clj "0.1.6"]])
 
 (def dependencies-cljs-dev
@@ -52,7 +54,7 @@
   :url "https://github.com/ayamada/vnctst-audio3"
   :license {:name "zlib License"
             :url "https://opensource.org/licenses/Zlib"}
-  :dependencies [[org.clojure/core.async "0.2.385"]]
+  :dependencies [[org.clojure/core.async "0.2.395"]]
   :source-paths ["src/cljs"]
   :clean-targets ^{:protect false} [:target-path
                                     :compile-path
@@ -80,7 +82,7 @@
                                    [ring/ring-core "1.5.0"]
                                    [hiccup "1.0.5"]]
                     :resource-paths ["resources"]
-                    :plugins [[lein-ring "0.9.7"]]
+                    :plugins [[lein-ring "0.10.0"]]
                     :ring {:port 8003
                            :handler vnctst.audio3.demo.server/handler}}
              :for-js {:dependencies ~dependencies-cljs-prod

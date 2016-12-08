@@ -67,9 +67,9 @@
                                 "1が右最大)。"
                                 "環境によってはピッチ、パンが無効な場合あり")
                      }
-   :play-bgm-drop-ogg {:fn #(vnctst.audio3/play-bgm! "audio/bgm/drop.ogg")
-                       :cljs "(vnctst.audio3/play-bgm! \"audio/bgm/drop.ogg\")"
-                       :js "vnctst.audio3.js.playBgm(\"audio/bgm/drop.ogg\")"
+   :play-bgm-drop-ogg {:fn #(vnctst.audio3/bgm! "audio/bgm/drop.ogg")
+                       :cljs "(vnctst.audio3/bgm! \"audio/bgm/drop.ogg\")"
+                       :js "vnctst.audio3.js.bgm(\"audio/bgm/drop.ogg\")"
                        :desc (str "\"audio/bgm/drop.ogg\" を"
                                   "BGMとして再生する。"
                                   "任意のurlを指定可能"
@@ -78,16 +78,16 @@
                                   "後述の方法で確認可能。"
                                   "再生できない環境の場合は何も再生されない。")
                        }
-   :play-bgm-drop-mp3 {:fn #(vnctst.audio3/play-bgm! "audio/bgm/drop.mp3")
-                       :cljs "(vnctst.audio3/play-bgm! \"audio/bgm/drop.mp3\")"
-                       :js "vnctst.audio3.js.playBgm(\"audio/bgm/drop.mp3\")"
+   :play-bgm-drop-mp3 {:fn #(vnctst.audio3/bgm! "audio/bgm/drop.mp3")
+                       :cljs "(vnctst.audio3/bgm! \"audio/bgm/drop.mp3\")"
+                       :js "vnctst.audio3.js.bgm(\"audio/bgm/drop.mp3\")"
                        :desc (str "\"audio/bgm/drop.mp3\" を"
                                   "BGMとして再生する。"
                                   "再生できない環境の場合は何も再生されない。")
                        }
-   :play-me-unmei-ogg {:fn #(vnctst.audio3/play-me! "audio/me/unmei.ogg")
-                       :cljs "(vnctst.audio3/play-me! \"audio/me/unmei.ogg\")"
-                       :js "vnctst.audio3.js.playMe(\"audio/me/unmei.ogg\")"
+   :play-me-unmei-ogg {:fn #(vnctst.audio3/me! "audio/me/unmei.ogg")
+                       :cljs "(vnctst.audio3/me! \"audio/me/unmei.ogg\")"
+                       :js "vnctst.audio3.js.me(\"audio/me/unmei.ogg\")"
                        :desc "\"audio/me/unmei.ogg\" をMEとして再生する"
                        }
    ;; BGS
@@ -118,9 +118,9 @@
                     :js "vnctst.audio3.js.play({se: \"yarare\"})"
                     :desc "\"audio/se/yarare.{ogg,mp3}\" をSEとして再生する"
                     }
-   :play-se-yarare-ogg {:fn #(vnctst.audio3/play-se! "audio/se/yarare.ogg")
-                        :cljs "(vnctst.audio3/play-se! \"audio/se/yarare.ogg\")"
-                        :js "vnctst.audio3.js.playSe(\"audio/se/yarare.ogg\")"
+   :play-se-yarare-ogg {:fn #(vnctst.audio3/se! "audio/se/yarare.ogg")
+                        :cljs "(vnctst.audio3/se! \"audio/se/yarare.ogg\")"
+                        :js "vnctst.audio3.js.se(\"audio/se/yarare.ogg\")"
                         :desc "\"audio/se/yarare.ogg\" をSEとして再生する"
                         }
    ;; Misc

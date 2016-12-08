@@ -82,7 +82,7 @@
   (when (common/initialized?)
     (bgm/stop-me! fade-sec)))
 
-;;; NB: これのみ特殊で、play-se!の返り値を引数に渡す必要がある。
+;;; NB: これのみ特殊で、se!の返り値を引数に渡す必要がある。
 ;;;     これによって、特定のSEのみを停止させる事ができる。
 ;;; TODO: seのfade-sec対応はまだ未実装
 (defn stop-se! [chan & [fade-sec]]
@@ -97,26 +97,32 @@
 ;;;     必要であれば後述の can-play? 系を使って、
 ;;;     再生可能かどうかを事前に呼出元にてチェックする事。
 
-(defn play-bgm! [key-or-path & [vol pitch pan]]
+(defn bgm! [key-or-path & [vol pitch pan]]
   (when (common/initialized?)
     (bgm/play-bgm! key-or-path vol pitch pan)))
 
-(defn play-bgs! [key-or-path & [vol pitch pan]]
+(defn bgs! [key-or-path & [vol pitch pan]]
   (when (common/initialized?)
     (bgm/play-bgs! key-or-path vol pitch pan)))
 
-(defn play-me! [key-or-path & [vol pitch pan]]
+(defn me! [key-or-path & [vol pitch pan]]
   (when (common/initialized?)
     (bgm/play-me! key-or-path vol pitch pan)))
 
 ;;; 返り値として、 stop-se! に渡す為の引数もしくはnilが返される。
 ;;; nilが返った時は、何らかの原因で再生が抑制された事を意味する。
 ;;; (同一SEの一定秒数内での連打抑制機能が付いているので、それに引っかかった等)
-(defn play-se! [key-or-path & [vol pitch pan]]
+(defn se! [key-or-path & [vol pitch pan]]
   (when (common/initialized?)
     (se/play! key-or-path vol pitch pan)))
 
-;;; 基本的には play-se! と同じだが、こちらはバックグラウンド中でも再生が可能。
+;;; obsoleted fn alias
+(def play-bgm! bgm!)
+(def play-bgs! bgs!)
+(def play-me! me!)
+(def play-se! se!)
+
+;;; 基本的には se! と同じだが、こちらはバックグラウンド中でも再生が可能。
 ;;; 「バックグラウンドだけど、ユーザに通知したい」時の為の機能。
 (defn alarm! [key-or-path & [vol pitch pan]]
   (when (common/initialized?)
@@ -126,10 +132,10 @@
 (defn play! [k & args]
   (assert (keyword? k) "Target should be keyword, not string") ; 文字列指定不可
   (case (namespace k)
-    "bgm" (apply play-bgm! k args)
-    "bgs" (apply play-bgs! k args)
-    "me" (apply play-me! k args)
-    "se" (apply play-se! k args)
+    "bgm" (apply bgm! k args)
+    "bgs" (apply bgs! k args)
+    "me" (apply me! k args)
+    "se" (apply se! k args)
     (throw (ex-info "Invalid keyword"
                     {:args (list* 'play! k args)}))))
 

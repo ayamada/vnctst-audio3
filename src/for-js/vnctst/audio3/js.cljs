@@ -55,17 +55,22 @@
 
 
 
-(defn ^:export playBgm [key-or-path & [vol pitch pan]]
-  (audio3/play-bgm! (conv-kp key-or-path) vol pitch pan))
+(defn ^:export bgm [key-or-path & [vol pitch pan]]
+  (audio3/bgm! (conv-kp key-or-path) vol pitch pan))
 
-(defn ^:export playBgs [key-or-path & [vol pitch pan]]
-  (audio3/play-bgs! (conv-kp key-or-path) vol pitch pan))
+(defn ^:export bgs [key-or-path & [vol pitch pan]]
+  (audio3/bgs! (conv-kp key-or-path) vol pitch pan))
 
-(defn ^:export playMe [key-or-path & [vol pitch pan]]
-  (audio3/play-me! (conv-kp key-or-path) vol pitch pan))
+(defn ^:export me [key-or-path & [vol pitch pan]]
+  (audio3/me! (conv-kp key-or-path) vol pitch pan))
 
-(defn ^:export playSe [key-or-path & [vol pitch pan]]
-  (audio3/play-se! (conv-kp key-or-path) vol pitch pan))
+(defn ^:export se [key-or-path & [vol pitch pan]]
+  (audio3/se! (conv-kp key-or-path) vol pitch pan))
+
+(def ^:export playBgm bgm)
+(def ^:export playBgs bgs)
+(def ^:export playMe me)
+(def ^:export playSe se)
 
 (defn ^:export alarm [key-or-path & [vol pitch pan]]
   (audio3/alarm! (conv-kp key-or-path) vol pitch pan))

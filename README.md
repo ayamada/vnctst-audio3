@@ -118,12 +118,12 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
 ## 最も単純な使い方
 
 - BGMを鳴らす(停止させるまでループ再生し続ける)
-    - `(audio3/play-bgm! "path/to/hoge.ogg")`
+    - `(audio3/bgm! "path/to/hoge.ogg")`
         - urlも指定可能だが、その場合は[CORS設定](https://www.google.com/search?nfpr=1&q=CORS)が必要となるケースがある事に注意。
         - ブラウザからローカルhtmlファイルを直に開いた場合は上手く再生できない(これはどの再生ライブラリでも同じ)。何らかのhttpサーバ越しにアクセスする事。
 
 - ME(非ループ曲)を再生する(曲の最後に到達したらそのまま再生を終了する)
-    - `(audio3/play-me! "path/to/fuga.ogg")`
+    - `(audio3/me! "path/to/fuga.ogg")`
 
 - 今鳴らしているBGM/MEをフェードアウトさせて(もしくは即座に)停止する
     - `(audio3/stop-bgm!)` フェードアウト1秒(デフォルト値)かけて停止
@@ -133,13 +133,13 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
     - 既にBGMがフェード中の時も基本的には何も起こらない。が、指定秒数が違う時のみ設定が上書きされる(適切に、フェードのまだ残っている部分が新しいフェード速度へと変更される)
 
 - 今鳴っているBGMをフェードアウト終了させてから次の曲を再生する
-    - `(audio3/play-bgm! "path/to/foo.ogg")`
+    - `(audio3/bgm! "path/to/foo.ogg")`
         - これは上の「BGMを鳴らす」のと全く同じコードだが、これで「現在の曲をフェードアウト終了させてから次の曲を再生する」という挙動となる
         - 現在鳴らしている曲と全く同一の曲が指定された場合は何も起こらない
         - フェードアウト中に別の曲や同一曲の再生要求が行われた場合は、内部で適切に処理される事が保証される(同一曲だった場合はフェードインして元に戻る)。この辺りは内部では複雑な状態遷移を持つが、外から利用する際にそれを気にする必要はない。雑に扱ってよい。
 
 - SE(効果音)を鳴らす(複数種類もしくは同一の音源ファイルを多重再生する事が可能)
-    - `(audio3/play-se! "path/to/fuga.ogg")`
+    - `(audio3/se! "path/to/fuga.ogg")`
     - SEはイベント毎に鳴らすケースが多いが、複数のイベントが同時発火して同じ効果音を同時に鳴らしてしまうと、それが重なって結果として音量の増幅が起こり、音割れを起こす事がある。これを防ぐ為に、非常に近いタイムスライス(デフォルトでは50msec以内)での同じ効果音の再生は抑制するようにしている。
 
 
@@ -152,17 +152,17 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
 そこで、以下のような指定方法を可能とした。以後ここでは、この指定方法を「プリセット指定」と呼ぶ。
 
 - `(audio3/play! :bgm/hoge)`
-    - これは `(audio3/play-bgm! "audio/bgm/hoge.ogg")` もしくは `(audio3/play-bgm! "audio/bgm/hoge.mp3")` として実行される
+    - これは `(audio3/bgm! "audio/bgm/hoge.ogg")` もしくは `(audio3/bgm! "audio/bgm/hoge.mp3")` として実行される
         - どちらになるかは、oggが再生可能なら前者、そうでなければ後者となる
         - ここで実際に展開されるpath位置やogg再生不可時の拡張子等は、前述の `init!` のオプション値によって変更可能
         - もちろん、 `"audio/bgm/hoge.ogg"` と `"audio/bgm/hoge.mp3"` の両方のファイルを事前に設置しておく必要がある(片方だけでは駄目。ただし後述のcordova等で再生ブラウザ環境が固定できる場合、oggのみにする事は可能)。
     - プリセットのキーの`namespace`部(キーワードのスラッシュ以前の部分)に指定できるのは `bgm` `se` `bgs` `me` の四種類だけ。つまり `"audio/bgm/"` `"audio/se/"` `"audio/bgs/"` `"audio/me/"` の中に設置した音源ファイルのみがプリセット指定する事が可能となる(ここ以外に設置したファイルは文字列でのpath指定にするしかない)
 
 - `(audio3/play! :se/fuga)`
-    - 上記同様に `(audio3/play-se! "audio/se/fuga.ogg")` もしくは `(audio3/play-se! "audio/se/fuga.mp3")` として実行される
+    - 上記同様に `(audio3/se! "audio/se/fuga.ogg")` もしくは `(audio3/se! "audio/se/fuga.mp3")` として実行される
 
-- `(audio3/play-me! :se/fuga)`
-    - `(audio3/play-me! "audio/se/fuga.ogg")` もしくは `(audio3/play-me! "audio/se/fuga.mp3")` として実行される
+- `(audio3/me! :se/fuga)`
+    - `(audio3/me! "audio/se/fuga.ogg")` もしくは `(audio3/me! "audio/se/fuga.mp3")` として実行される
     - `"audio/se/"` 配下に置いたファイルであっても、SE以外の種別(BGM/BGS/ME)として再生させる事は可能、というサンプル例(ただし、非常に分かりづらい)。
 
 とりあえず、ここまでで「適当に`audio/`配下に配置した音源ファイルをBGMやSEとして一発で再生でき、しかもBGMフェードアウト処理や同一SE多重再生管理を適切に行ってくれる」ものとして利用できる。
@@ -199,9 +199,9 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
 - 再生開始時に、個別にvolume(音量), pitch(再生速度レート), pan(左右のバランス)を指定する
     - `(audio3/play! :bgm/hoge 1.5 1.2 -1.0)`
     - `(audio3/play! :se/fuga 0.15 0.8 1.0)`
-    - `(audio3/play-bgm! "path/to/hoge.ogg" 1.5 1.2 -1.0)`
-    - `(audio3/play-se! "path/to/fuga.ogg" 0.15 0.8 1.0)`
-    - `play!` `play-bgm!` `play-se!` 等に対して、更に追加の引数として `volume` `pitch` `pan` の三つの数値を指定可能
+    - `(audio3/bgm! "path/to/hoge.ogg" 1.5 1.2 -1.0)`
+    - `(audio3/se! "path/to/fuga.ogg" 0.15 0.8 1.0)`
+    - `play!` `bgm!` `se!` 等に対して、更に追加の引数として `volume` `pitch` `pan` の三つの数値を指定可能
         - volumeは0以上の小数値を指定する。省略時は 1.0 が指定されたものとして扱われる。
             - ここには1.0以上の値を指定する事が可能。ただし前述のマスターボリュームおよび各ボリューム設定を乗算した最終結果が1.0以上になる場合は1.0になる状態で頭打ちとなる(つまり初期状態のままなら、volumeに4.0以上を指定しても、4.0を指定した時と同じ再生音量となり、それよりも大きくする事はできない)
         - pitchは 0.1 ～ 10.0 の小数値を指定する。省略時は 1.0 として扱われる。小さくするとゆっくりした再生となり、大きくすると加速した再生となる
@@ -209,10 +209,10 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
         - pitchおよびpanについては、反映されない実行環境がある事に注意(WebAudioであっても非対応なブラウザが普通にある)
 
 - 効果音を途中で停止させる
-    - `(go (let [se-ch (audio3/play-se! "path/to/fuga.ogg")] (<! (cljs.core.async/timeout 1000)) (audio3/stop-se! se-ch)))`
-    - `audio3/play-se!` (および `audio3/play!` にて `:se/*` 系を指定した場合)は再生ごとのチャンネルを返す。 `audio3/stop-se!` には、この再生チャンネルを引数として渡す必要がある
+    - `(go (let [se-ch (audio3/se! "path/to/fuga.ogg")] (<! (cljs.core.async/timeout 1000)) (audio3/stop-se! se-ch)))`
+    - `audio3/se!` (および `audio3/play!` にて `:se/*` 系を指定した場合)は再生ごとのチャンネルを返す。 `audio3/stop-se!` には、この再生チャンネルを引数として渡す必要がある
     - 既に再生完了したチャンネルを `audio3/stop-se!` に渡しても、何も起こらない
-    - 途中で停止させる必要がなければ、`play-se!`の返すチャンネルは無視しても問題ない(再生終了後に適切にGCされる)
+    - 途中で停止させる必要がなければ、`se!`の返すチャンネルは無視しても問題ない(再生終了後に適切にGCされる)
 
 - BGMが再生中かどうかを調べる
     - `(audio3/playing-bgm?)`
@@ -223,7 +223,7 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
 
 - BGSを再生/停止する
     - BGSとは、BGMと並行して再生できるループ音源。人ごみの音、風の音、雨音、といった環境音を、BGMと同時に再生する事を想定している
-    - `(audio3/play-bgs! "path/to/foo.ogg")`
+    - `(audio3/bgs! "path/to/foo.ogg")`
     - `(audio3/play! :bgs/foo)`
     - `(audio3/stop-bgs!)`
     - 追加の引数についてはBGMと同じ
@@ -245,14 +245,14 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
     - `(audio3/loaded-se? "path/to/fuga.ogg")`
     - `(audio3/loaded-se? :se/fuga)`
         - プリロードが完了しているなら真値を返す。
-        - `play-se!` (および `play!` に `:se/*` 系のキーを指定した場合)も内部でプリロードを行っている為、 `preload-se!` を実行していなくても、一度でも鳴らした事のあるSEは、これによって真値が返る。
+        - `se!` (および `play!` に `:se/*` 系のキーを指定した場合)も内部でプリロードを行っている為、 `preload-se!` を実行していなくても、一度でも鳴らした事のあるSEは、これによって真値が返る。
         - 注意点として、ロード時に何らかのエラー(ファイルがない等)が発生したケースでも真値を返す(「エラーが起こったが、ロード自体は完了した」という扱い)。エラーを検出したい場合は後述の `succeeded-to-load-se?` を使う事。
     - `(audio3/succeeded-to-load-se? "path/to/fuga.ogg")`
     - `(audio3/succeeded-to-load-se? :se/fuga)`
         - プリロードが完了し、再生が可能な状態になっていれば真値を返す。
         - `loaded-se?` との違いはロードエラーの扱い。エラー時は偽値になる。
         - これ単体ではロード完了待ちには使えない事に注意。ロード完了待ちをするには前述の `loaded-se?` の方が適切。
-    - プリロード中に `play-se!` が実行された場合、プリロードが完了するまで再生は遅延する(通常のプリロードなし初回再生の時と同じ挙動)。
+    - プリロード中に `se!` が実行された場合、プリロードが完了するまで再生は遅延する(通常のプリロードなし初回再生の時と同じ挙動)。
 
 - SEのアンロードを行う
     - `(audio3/unload-se! "path/to/fuga.ogg")`
@@ -266,7 +266,7 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
     - `(audio3/preload-bgm! "path/to/hoge.ogg")`
     - `(audio3/preload-bgm! :bgm/hoge)`
     - BGM/BGS/MEはどれも「BGM系」として、プリロード時には全て同じ扱いとなる
-    - 注意点として、BGM系はSEとは違い、単に `play-bgm!` 等を実行しただけでは内部キャッシュ状態とはならない。なぜならBGM系は「即座に再生しないといけない」という要件があるケースがあまりなく、また一曲のメモリ消費が大きい場合が多いからである。明示的に `preload-bgm!` を実行した時のみ、プリロード状態になる。
+    - 注意点として、BGM系はSEとは違い、単に `bgm!` 等を実行しただけでは内部キャッシュ状態とはならない。なぜならBGM系は「即座に再生しないといけない」という要件があるケースがあまりなく、また一曲のメモリ消費が大きい場合が多いからである。明示的に `preload-bgm!` を実行した時のみ、プリロード状態になる。
 
 - BGM系のプリロードが完了しているかを調査する
     - `(audio3/preloaded-bgm? "path/to/hoge.ogg")`
@@ -274,7 +274,7 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
     - `(audio3/succeeded-to-preload-bgm? "path/to/hoge.ogg")`
     - `(audio3/succeeded-to-preload-bgm? :bgm/hoge)`
     - これらについてはSEのものとほぼ同様。
-    - 明示的にプリロード完了を待たなくても `play-bgm!` 系の実行は行える(もちろんロード完了待ちは発生するが)。
+    - 明示的にプリロード完了を待たなくても `bgm!` 系の実行は行える(もちろんロード完了待ちは発生するが)。
 
 - BGM系のアンロードを行う
     - `(audio3/unload-bgm! "path/to/hoge.ogg")`
@@ -335,7 +335,7 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
     - `(audio3/alarm! "path/to/fuga.ogg")`
     - `(audio3/alarm! :se/fuga)`
     - 名前の通り、アラーム通知用途
-    - 追加引数等は `play-se!` と同様
+    - 追加引数等は `se!` と同様
 
 - ボリューム値変換ユーティリティ
     - `(audio3/float->percent f)` `=>` 0～100
@@ -410,10 +410,10 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
 (audio3/play! :me/jingle)
 (audio3/play! :se/beep)
 
-(audio3/play-bgm! "path/to/bach.ogg")
-(audio3/play-bgs! "path/to/wind.ogg")
-(audio3/play-me! "path/to/jingle.ogg")
-(audio3/play-se! "path/to/beep.ogg")
+(audio3/bgm! "path/to/bach.ogg")
+(audio3/bgs! "path/to/wind.ogg")
+(audio3/me! "path/to/jingle.ogg")
+(audio3/se! "path/to/beep.ogg")
 ```
 
 ~~~
@@ -452,7 +452,7 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
   (audio3/preload-se! :se/beep)
   (<! (async/timeout 10000))
   ;; 先にプリロードしておけば、初回再生時でもロード待ち無しに再生可能
-  (audio3/play-bgm! "path/to/hoge.ogg")
+  (audio3/bgm! "path/to/hoge.ogg")
   (audio3/play! :se/beep)
   (<! (async/timeout 10000))
   ;; 今後もう再生しないなら、アンロードしてメモリを解放しておく
@@ -519,12 +519,12 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
 ## 最も単純な使い方
 
 - BGMを鳴らす(停止させるまでループ再生し続ける)
-    - `vnctst.audio3.js.playBgm("path/to/hoge.ogg")`
+    - `vnctst.audio3.js.bgm("path/to/hoge.ogg")`
         - urlも指定可能だが、その場合は[CORS設定](https://www.google.com/search?nfpr=1&q=CORS)が必要となるケースがある事に注意。
         - ブラウザからローカルhtmlファイルを直に開いた場合は上手く再生できない(これはどの再生ライブラリでも同じ)。何らかのhttpサーバ越しにアクセスする事。
 
 - ME(非ループ曲)を再生する(曲の最後に到達したらそのまま再生を終了する)
-    - `vnctst.audio3.js.playMe("path/to/fuga.ogg")`
+    - `vnctst.audio3.js.me("path/to/fuga.ogg")`
 
 - 今鳴らしているBGM/MEをフェードアウトさせて(もしくは即座に)停止する
     - `vnctst.audio3.js.stopBgm()` フェードアウト1秒(デフォルト値)かけて停止
@@ -534,13 +534,13 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
     - 既にBGMがフェード中の時も基本的には何も起こらない。が、指定秒数が違う時のみ設定が上書きされる(適切に、フェードのまだ残っている部分が新しいフェード速度へと変更される)
 
 - 今鳴っているBGMをフェードアウト終了させてから次の曲を再生する
-    - `vnctst.audio3.js.playBgm("path/to/foo.ogg")`
+    - `vnctst.audio3.js.bgm("path/to/foo.ogg")`
         - これは上の「BGMを鳴らす」のと全く同じコードだが、これで「現在の曲をフェードアウト終了させてから次の曲を再生する」という挙動となる
         - 現在鳴らしている曲と全く同一の曲が指定された場合は何も起こらない
         - フェードアウト中に別の曲や同一曲の再生要求が行われた場合は、内部で適切に処理される事が保証される(同一曲だった場合はフェードインして元に戻る)。この辺りは内部では複雑な状態遷移を持つが、外から利用する際にそれを気にする必要はない。雑に扱ってよい。
 
 - SE(効果音)を鳴らす(複数種類もしくは同一の音源ファイルを多重再生する事が可能)
-    - `vnctst.audio3.js.playSe("path/to/fuga.ogg")`
+    - `vnctst.audio3.js.se("path/to/fuga.ogg")`
     - SEはイベント毎に鳴らすケースが多いが、複数のイベントが同時発火して同じ効果音を同時に鳴らしてしまうと、それが重なって結果として音量の増幅が起こり、音割れを起こす事がある。これを防ぐ為に、非常に近いタイムスライス(デフォルトでは50msec以内)での同じ効果音の再生は抑制するようにしている。
 
 
@@ -553,17 +553,17 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
 そこで、以下のような指定方法を可能とした。以後ここでは、この指定方法を「プリセット指定」と呼ぶ。
 
 - `vnctst.audio3.js.play({bgm:"hoge"})`
-    - これは `vnctst.audio3.js.playBgm("audio/bgm/hoge.ogg")` もしくは `vnctst.audio3.js.playBgm("audio/bgm/hoge.mp3")` として実行される
+    - これは `vnctst.audio3.js.bgm("audio/bgm/hoge.ogg")` もしくは `vnctst.audio3.js.bgm("audio/bgm/hoge.mp3")` として実行される
         - どちらになるかは、oggが再生可能なら前者、そうでなければ後者となる
         - ここで実際に展開されるpath位置やogg再生不可時の拡張子等は、前述の `init()` のオプション値によって変更可能
         - もちろん、 `"audio/bgm/hoge.ogg"` と `"audio/bgm/hoge.mp3"` の両方のファイルを事前に設置しておく必要がある(片方だけでは駄目。ただし後述のcordova等で再生ブラウザ環境が固定できる場合、oggのみにする事は可能)。
     - プリセットのkey部に指定できるのは `bgm` `se` `bgs` `me` の四種類だけ。つまり `"audio/bgm/"` `"audio/se/"` `"audio/bgs/"` `"audio/me/"` の中に設置した音源ファイルのみがプリセット指定する事が可能となる(ここ以外に設置したファイルは文字列でのpath指定にするしかない)
 
 - `vnctst.audio3.js.play({se:"fuga"})`
-    - 上記同様に `vnctst.audio3.js.playSe("audio/se/fuga.ogg")` もしくは `vnctst.audio3.js.playSe({"audio/se/fuga.mp3")` として実行される
+    - 上記同様に `vnctst.audio3.js.se("audio/se/fuga.ogg")` もしくは `vnctst.audio3.js.se({"audio/se/fuga.mp3")` として実行される
 
-- `vnctst.audio3.js.playMe({se:"fuga"})`
-    - `vnctst.audio3.js.playMe("audio/se/fuga.ogg")` もしくは `vnctst.audio3.js.playMe("audio/se/fuga.mp3")` として実行される
+- `vnctst.audio3.js.me({se:"fuga"})`
+    - `vnctst.audio3.js.me("audio/se/fuga.ogg")` もしくは `vnctst.audio3.js.me("audio/se/fuga.mp3")` として実行される
     - `"audio/se/"` 配下に置いたファイルであっても、SE以外の種別(BGM/BGS/ME)として再生させる事は可能、というサンプル例(ただし、非常に分かりづらい)。
 
 とりあえず、ここまでで「適当に`audio/`配下に配置した音源ファイルをBGMやSEとして一発で再生でき、しかもBGMフェードアウト処理や同一SE多重再生管理を適切に行ってくれる」ものとして利用できる。
@@ -600,9 +600,9 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
 - 再生開始時に、個別にvolume(音量), pitch(再生速度レート), pan(左右のバランス)を指定する
     - `vnctst.audio3.js.play({bgm:"hoge"}, 1.5, 1.2, -1.0)`
     - `vnctst.audio3.js.play({se:"fuga"}, 0.15, 0.8, 1.0)`
-    - `vnctst.audio3.js.playBgm("path/to/hoge.ogg", 1.5, 1.2, -1.0)`
-    - `vnctst.audio3.js.playSe("path/to/fuga.ogg", 0.15, 0.8, 1.0)`
-    - `play` `playBgm` `playSe` 等に対して、更に追加の引数として `volume` `pitch` `pan` の三つの数値を指定可能
+    - `vnctst.audio3.js.bgm("path/to/hoge.ogg", 1.5, 1.2, -1.0)`
+    - `vnctst.audio3.js.se("path/to/fuga.ogg", 0.15, 0.8, 1.0)`
+    - `play` `bgm` `se` 等に対して、更に追加の引数として `volume` `pitch` `pan` の三つの数値を指定可能
         - volumeは0以上の小数値を指定する。省略時は 1.0 が指定されたものとして扱われる。
             - ここには1.0以上の値を指定する事が可能。ただし前述のマスターボリュームおよび各ボリューム設定を乗算した最終結果が1.0以上になる場合は1.0になる状態で頭打ちとなる(つまり初期状態のままなら、volumeに4.0以上を指定しても、4.0を指定した時と同じ再生音量となり、それよりも大きくする事はできない)
         - pitchは 0.1 ～ 10.0 の小数値を指定する。省略時は 1.0 として扱われる。小さくするとゆっくりした再生となり、大きくすると加速した再生となる
@@ -610,10 +610,10 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
         - pitchおよびpanについては、反映されない実行環境がある事に注意(WebAudioであっても非対応なブラウザが普通にある)
 
 - 効果音を途中で停止させる
-    - `var seCh = vnctst.audio3.js.playSe("path/to/fuga.ogg");` `setTimeout(function () { vnctst.audio3.js.stopSe(seCh) }, 1000);`
-    - `vnctst.audio3.js.playSe()` (および `vnctst.audio3.js.play()` にて `{se:"..."}` 系を指定した場合)は再生ごとのチャンネルを返す。 `vnctst.audio3.js.stopSe()` には、この再生チャンネルを引数として渡す必要がある
+    - `var seCh = vnctst.audio3.js.se("path/to/fuga.ogg");` `setTimeout(function () { vnctst.audio3.js.stopSe(seCh) }, 1000);`
+    - `vnctst.audio3.js.se()` (および `vnctst.audio3.js.play()` にて `{se:"..."}` 系を指定した場合)は再生ごとのチャンネルを返す。 `vnctst.audio3.js.stopSe()` には、この再生チャンネルを引数として渡す必要がある
     - 既に再生完了したチャンネルを `vnctst.audio3.js.stopSe()` に渡しても、何も起こらない
-    - 途中で停止させる必要がなければ、`playSe()`の返すチャンネルは無視しても問題ない(再生終了後に適切にGCされる)
+    - 途中で停止させる必要がなければ、`se()`の返すチャンネルは無視しても問題ない(再生終了後に適切にGCされる)
 
 - BGMが再生中かどうかを調べる
     - `vnctst.audio3.js.isPlayingBgm()`
@@ -624,7 +624,7 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
 
 - BGSを再生/停止する
     - BGSとは、BGMと並行して再生できるループ音源。人ごみの音、風の音、雨音、といった環境音を、BGMと同時に再生する事を想定している
-    - `vnctst.audio3.js.playBgs("path/to/foo.ogg")`
+    - `vnctst.audio3.js.bgs("path/to/foo.ogg")`
     - `vnctst.audio3.js.play({bgs:"foo"})`
     - `vnctst.audio3.js.stopBgs()`
     - 追加の引数についてはBGMと同じ
@@ -646,14 +646,14 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
     - `vnctst.audio3.js.isLoadedSe("path/to/fuga.ogg")`
     - `vnctst.audio3.js.isLoadedSe({se:"fuga"})`
         - プリロードが完了しているなら真値を返す。
-        - `playSe()` (および `play()` に `{se:"..."}` 系のキーを指定した場合)も内部でプリロードを行っている為、 `preloadSe()` を実行していなくても、一度でも鳴らした事のあるSEは、これによって真値が返る。
+        - `se()` (および `play()` に `{se:"..."}` 系のキーを指定した場合)も内部でプリロードを行っている為、 `preloadSe()` を実行していなくても、一度でも鳴らした事のあるSEは、これによって真値が返る。
         - 注意点として、ロード時に何らかのエラー(ファイルがない等)が発生したケースでも真値を返す(「エラーが起こったが、ロード自体は完了した」という扱い)。エラーを検出したい場合は後述の `isSucceededToLoadSe()` を使う事。
     - `vnctst.audio3.js.isSucceededToLoadSe("path/to/fuga.ogg")`
     - `vnctst.audio3.js.isSucceededToLoadSe({se:"fuga"})`
         - プリロードが完了し、再生が可能な状態になっていれば真値を返す。
         - `isLoadedSe()` との違いはロードエラーの扱い。エラー時は偽値になる。
         - これ単体ではロード完了待ちには使えない事に注意。ロード完了待ちをするには前述の `isLoadedSe()` の方が適切。
-    - プリロード中に `playSe()` が実行された場合、プリロードが完了するまで再生は遅延する(通常のプリロードなし初回再生の時と同じ挙動)。
+    - プリロード中に `se()` が実行された場合、プリロードが完了するまで再生は遅延する(通常のプリロードなし初回再生の時と同じ挙動)。
 
 - SEのアンロードを行う
     - `vnctst.audio3.js.unloadSe("path/to/fuga.ogg")`
@@ -667,7 +667,7 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
     - `vnctst.audio3.js.preloadBgm("path/to/hoge.ogg")`
     - `vnctst.audio3.js.preloadBgm({bgm:"hoge"})`
     - BGM/BGS/MEはどれも「BGM系」として、プリロード時には全て同じ扱いとなる
-    - 注意点として、BGM系はSEとは違い、単に `playBgm()` 等を実行しただけでは内部キャッシュ状態とはならない。なぜならBGM系は「即座に再生しないといけない」という要件があるケースがあまりなく、また一曲のメモリ消費が大きい場合が多いからである。明示的に `preloadBgm()` を実行した時のみ、プリロード状態になる。
+    - 注意点として、BGM系はSEとは違い、単に `bgm()` 等を実行しただけでは内部キャッシュ状態とはならない。なぜならBGM系は「即座に再生しないといけない」という要件があるケースがあまりなく、また一曲のメモリ消費が大きい場合が多いからである。明示的に `preloadBgm()` を実行した時のみ、プリロード状態になる。
 
 - BGM系のプリロードが完了しているかを調査する
     - `vnctst.audio3.js.isPreloadedBgm("path/to/hoge.ogg")`
@@ -675,7 +675,7 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
     - `vnctst.audio3.js.isSucceededToPreloadBgm("path/to/hoge.ogg")`
     - `vnctst.audio3.js.isSucceededToPreloadBgm({bgm:"hoge"})`
     - これらについてはSEのものとほぼ同様。
-    - 明示的にプリロード完了を待たなくても `playBgm()` 系の実行は行える(もちろんロード完了待ちは発生するが)。
+    - 明示的にプリロード完了を待たなくても `bgm()` 系の実行は行える(もちろんロード完了待ちは発生するが)。
 
 - BGM系のアンロードを行う
     - `vnctst.audio3.js.unloadBgm("path/to/hoge.ogg")`
@@ -702,7 +702,7 @@ js版では、プリセットのまとめプリロードには非対応。
     - `vnctst.audio3.js.alarm("path/to/fuga.ogg")`
     - `vnctst.audio3.js.alarm({se:"fuga"})`
     - 名前の通り、アラーム通知用途
-    - 追加引数等は `playSe()` と同様
+    - 追加引数等は `se()` と同様
 
 - ボリューム値変換ユーティリティ
     - `vnctst.audio3.js.floatToPercent(f)` `=>` 0～100
@@ -741,19 +741,19 @@ va3.play({bgs:"wind"});
 va3.play({me:"jingle"});
 va3.play({se:"beep"});
 
-va3.playBgm("path/to/bach.ogg");
-va3.playBgs("path/to/wind.ogg");
-va3.playMe("path/to/jingle.ogg");
-va3.playSe("path/to/beep.ogg");
+va3.bgm("path/to/bach.ogg");
+va3.bgs("path/to/wind.ogg");
+va3.me("path/to/jingle.ogg");
+va3.se("path/to/beep.ogg");
 ```
 
 ~~~
 // path指定の場合は、再生可能メディア種別の判定を行った方がより良い
 if (va3.canPlayOgg()) {
-  va3.playSe("path/to/hoge.ogg");
+  va3.se("path/to/hoge.ogg");
 }
 else {
-  va3.playSe("path/to/hoge.mp3");
+  va3.se("path/to/hoge.mp3");
 }
 
 console.log(va3.canPlayMp3());
@@ -783,7 +783,7 @@ va3.preloadBgm("path/to/hoge.ogg");
 va3.preloadSe({se:"beep"});
 ...
 // 先にプリロードしておけば、初回再生時でもロード待ち無しに再生可能
-va3.playBgm("path/to/hoge.ogg");
+va3.bgm("path/to/hoge.ogg");
 va3.play({se:"beep"});
 ...
 // 今後もう再生しないなら、アンロードしてメモリを解放しておく
@@ -927,8 +927,16 @@ zlib風ライセンスとします。
 # ChangeLog
 
 <!--
-- 0.1.2-SNAPSHOT (XXXX-XX-XX 次リリース予定)
+- 0.1.3-SNAPSHOT (XXXX-XX-XX 次リリース予定)
+    - ドキュメントの修正と追加
 -->
+
+- 0.1.2-SNAPSHOT (2016-12-09)
+    - ドキュメントの修正と追加
+    - `play-bgm!` `play-bgs!` `play-me!` `play-se!` を
+      `bgm!` `bgs!` `me!` `se!` へとrenameする。
+      ただし古い方の名前も obsoleted aliases として残す。
+      同様のインターフェースをjs版にも提供。
 
 - 0.1.1 (2016-07-02)
     - ドキュメントの修正と追加

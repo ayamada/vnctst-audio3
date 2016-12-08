@@ -34,25 +34,32 @@
 
 ;;; TODO: 一部の古いモバイル系は :dumb 固定にしたい。しかしどう判定する？
 
-(defn- determine-se-device-keys [never-use-webaudio?]
+(defn- determine-se-device-keys [never-use-webaudio? never-use-htmlaudio?]
   (let [r (if (or
                 (:android util/terminal-type)
                 (:ios util/terminal-type))
             [:web-audio :html-audio-single :dumb]
-            [:web-audio :html-audio-multi :dumb])]
-    (if never-use-webaudio?
-      (vec (remove #{:web-audio} r))
-      r)))
+            [:web-audio :html-audio-multi :dumb])
+        r (if never-use-webaudio?
+            (vec (remove #{:web-audio} r))
+            r)
+        r (if never-use-htmlaudio?
+            (vec (remove #{:html-audio-single :html-audio-multi} r))
+            r)]
+    r))
 
-(defn- determine-bgm-bgs-me-device-keys [never-use-webaudio?]
-  ;; androidのchromeではWebAudioのデコードに時間がかかるらしいので、
-  ;; これのみ特別扱いして、WebAudioを使わせないようにする
-  (if (and
-        (:android util/terminal-type)
-        (:chrome util/terminal-type))
-    [:html-audio-single :dumb]
-    ;; そうでなければ、選択基準はSEと同じでよい
-    (determine-se-device-keys never-use-webaudio?)))
+(defn- determine-bgm-bgs-me-device-keys
+  [never-use-webaudio? never-use-htmlaudio?]
+  (if never-use-htmlaudio?
+    [:web-audio :dumb]
+    ;; androidのchromeではWebAudioのデコードに時間がかかるらしいので、
+    ;; これのみ特別扱いして、WebAudioを使わせないようにする
+    (if (and
+          (:android util/terminal-type)
+          (:chrome util/terminal-type))
+      [:html-audio-single :dumb]
+      ;; そうでなければ、選択基準はSEと同じでよい
+      (determine-se-device-keys never-use-webaudio? never-use-htmlaudio?))))
 
 
 (defn- resolve-device [device-keys]
@@ -64,9 +71,9 @@
 
 
 ;;; 適切にデバイスの判定と初期化を行い、stateに保存する
-(defn init! [& [never-use-webaudio?]]
-  (let [se-device (resolve-device (determine-se-device-keys never-use-webaudio?))
-        bgm-bgs-me-device (resolve-device (determine-bgm-bgs-me-device-keys never-use-webaudio?))]
+(defn init! [& [never-use-webaudio? never-use-htmlaudio?]]
+  (let [se-device (resolve-device (determine-se-device-keys never-use-webaudio? never-use-htmlaudio?))
+        bgm-bgs-me-device (resolve-device (determine-bgm-bgs-me-device-keys never-use-webaudio? never-use-htmlaudio?))]
     (assert se-device)
     (assert bgm-bgs-me-device)
     (state/set! :se-device se-device)

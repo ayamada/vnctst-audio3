@@ -112,6 +112,8 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
             - 真値を指定する事で、再生動作の呼び出しや、ファイルのロードエラー等の各種情報をコンソールに出力するようになります。当ライブラリは基本的にエラーがあっても例外は投げないポリシーとしている為、エラーの検知にはこのオプションの設定が必須です。デバッグビルドでは真に、リリースビルドでは偽になるように上手く設定するとよいでしょう。
         -  `:never-use-webaudio? 真偽値`
             - WebAudioを常に無効化したい(つまりHtmlAudioのみ使うようにしたい)時に真値を指定します。これは基本的には当ライブラリの開発者向けの機能です。
+        -  `:never-use-htmlaudio-at-mobile? 真偽値`
+            - http://ch.nicovideo.jp/indies-game/blomaga/ar1147258 への対策として、モバイル環境っぽい場合でのHtmlAudioの使用を禁止します(WebAudioの使えない環境では常時ミュート状態となります)。
     - この`init!`を複数回実行した場合、二回目以降の実行は無視されます(つまり後から上記パラメータを再設定する事はできません)
 
 
@@ -360,6 +362,7 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
               :always-mute-at-mobile? true
               :debug? true
               :never-use-webaudio? false
+              :never-use-htmlaudio-at-mobile? false
               )
 
 ;; ベース音量の設定および取得
@@ -512,6 +515,9 @@ html5環境の為の、ゲーム向け音響ファイル再生ライブラリ
             - 真値を指定する事で、再生動作の呼び出しや、ファイルのロードエラー等の各種情報をコンソールに出力するようになります。当ライブラリは基本的にエラーがあっても例外は投げないポリシーとしている為、エラーの検知にはこのオプションの設定が必須です。デバッグビルドでは真に、リリースビルドでは偽になるように上手く設定するとよいでしょう。
         -  `"never-use-webaudio?": 真偽値`
             - WebAudioを常に無効化したい(つまりHtmlAudioのみ使うようにしたい)時に真値を指定します。これは基本的には当ライブラリの開発者向けの機能です。
+        -  `"never-use-htmlaudio-at-mobile": 真偽値`
+            - http://ch.nicovideo.jp/indies-game/blomaga/ar1147258 への対策として、モバイル環境っぽい場合でのHtmlAudioの使用を禁止します(WebAudioの使えない環境では常時ミュート状態となります)。
+    - この`init()`を複数回実行した場合、二回目以降の実行は無視されます(つまり後から上記パラメータを再設定する事はできません)
 
 なお `vnctst.audio3.js.init()` が長くて嫌な場合は `var va3 = vnctst.audio3.js` を実行しておけば `va3.init()` で実行できます。これは`init()`以外でも同様です。
 
@@ -722,7 +728,8 @@ va3.init({"fallback-ext": "mp3",
           "dont-stop-on-background?": false,
           "always-mute-at-mobile?": true,
           "debug?": true,
-          "never-use-webaudio?": false});
+          "never-use-webaudio?": false,
+          "never-use-htmlaudio-at-mobile?": false});
 
 // ベース音量の設定および取得
 va3.setVolumeMaster(0.5);
@@ -934,6 +941,8 @@ zlib風ライセンスとします。
 - 0.1.2-SNAPSHOT (2016-12-09)
     - dependenciesのバージョン上げ
     - ドキュメントの修正と追加
+    - http://ch.nicovideo.jp/indies-game/blomaga/ar1147258 への対応として、
+      `:never-use-htmlaudio-at-mobile?` オプションを追加
     - `play-bgm!` `play-bgs!` `play-me!` `play-se!` を
       `bgm!` `bgs!` `me!` `se!` へとrenameする。
       ただし古い方の名前も obsoleted aliases として残す。

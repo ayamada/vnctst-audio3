@@ -35,7 +35,6 @@
           default-ext (if (util/can-play-ogg?) "ogg" fallback-ext)
           url-prefix (or (:url-prefix options) "audio/")
           ]
-      (device/init! (:never-use-webaudio? options))
       ;; 設定項目(初回限定。後からの変更はしない想定)
       (state/set! :debug? (:debug? options))
       (state/set! :never-use-webaudio? (:never-use-webaudio? options))
@@ -46,6 +45,12 @@
       (state/set! :muted-by-mobile? (and
                                       (:always-mute-at-mobile? options)
                                       (:mobile util/terminal-type)))
+      (state/set! :never-use-htmlaudio?
+                  (and
+                    (:never-use-htmlaudio-at-mobile? options)
+                    (:mobile util/terminal-type)))
+      (device/init! (state/get :never-use-webaudio?)
+                    (state/get :never-use-htmlaudio?))
       (state/set! :common-initialized? true)
       ;; 設定項目(後で設定可能)
       ;; NB: これらの状態はinit!より前に設定されるケースがありえるので、

@@ -48,7 +48,7 @@
                [['figwheel figwheel-version]])))
 
 
-(defproject jp.ne.tir/vnctst-audio3 "0.1.2-SNAPSHOT"
+(defproject jp.ne.tir/vnctst-audio3 "0.1.2"
   :min-lein-version "2.5.0"
   :description "audio playback library for html5 game"
   :url "https://github.com/ayamada/vnctst-audio3"

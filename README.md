@@ -935,10 +935,10 @@ zlib風ライセンスとします。
 
 <!--
 - 0.1.3-SNAPSHOT (XXXX-XX-XX 次リリース予定)
-    - ドキュメントの修正と追加
+    - ？？？
 -->
 
-- 0.1.2-SNAPSHOT (2016-12-09)
+- 0.1.2 (2016-12-09)
     - dependenciesのバージョン上げ
     - ドキュメントの修正と追加
     - http://ch.nicovideo.jp/indies-game/blomaga/ar1147258 への対応として、

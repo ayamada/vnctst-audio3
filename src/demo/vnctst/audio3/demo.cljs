@@ -23,12 +23,12 @@
    :stop-bgm {:fn #(vnctst.audio3/stop-bgm!)
               :cljs "(vnctst.audio3/stop-bgm!)"
               :js "vnstst.audio3.js.stopBgm()"
-              :desc "BGMをフェード停止させる"
+              :desc "BGM / ME をフェード停止させる"
               }
    :stop-bgm-0 {:fn #(vnctst.audio3/stop-bgm! 0)
                 :cljs "(vnctst.audio3/stop-bgm! 0)"
                 :js "vnstst.audio3.js.stopBgm(0)"
-                :desc "BGMを即座に停止させる(引数はフェード秒数)"
+                :desc "BGM / ME を即座に停止させる(引数はフェード秒数)"
                 }
    :play-bgm-va3 {:fn #(vnctst.audio3/play! :bgm/va3)
                   :cljs "(vnctst.audio3/play! :bgm/va3)"
@@ -90,6 +90,16 @@
                        :js "vnctst.audio3.js.me(\"audio/me/unmei.ogg\")"
                        :desc "\"audio/me/unmei.ogg\" をMEとして再生する"
                        }
+   :play-bgm-nil {:fn #(vnctst.audio3/bgm! nil)
+                  :cljs "(vnctst.audio3/bgm! nil)"
+                  :js "vnctst.audio3.js.bgm(null)"
+                  :desc "BGM / ME をフェード停止させる"
+                  }
+   :play-me-nil {:fn #(vnctst.audio3/me! nil)
+                 :cljs "(vnctst.audio3/me! nil)"
+                 :js "vnctst.audio3.js.me(null)"
+                 :desc "BGM / ME をフェード停止させる"
+                 }
    ;; BGS
    :stop-bgs {:fn #(vnctst.audio3/stop-bgs!)
               :cljs "(vnctst.audio3/stop-bgs!)"
@@ -106,6 +116,11 @@
                     :js "vnctst.audio3.js.play({bgs: \"noise\"})"
                     :desc "\"audio/bgs/noise.{ogg,mp3}\" をBGSとして再生する"
                     }
+   :play-bgs-nil {:fn #(vnctst.audio3/bgs! nil)
+                  :cljs "(vnctst.audio3/bgs! nil)"
+                  :js "vnctst.audio3.js.bgs(null)"
+                  :desc "BGSをフェード停止させる"
+                  }
    ;; SE
    :play-se-jump {:fn #(vnctst.audio3/play! :se/jump)
                   :cljs "(vnctst.audio3/play! :se/jump)"

@@ -126,6 +126,11 @@
                 (demo-button :play-bgm-drop-mp3)
                 [:br]
                 (demo-button :play-me-unmei-ogg)
+                [:br]
+                [:br]
+                (demo-button :play-bgm-nil)
+                [:br]
+                (demo-button :play-me-nil)
                 ]
                [:hr]
                ;; BGS
@@ -142,6 +147,9 @@
                 [:br]
                 [:br]
                 (demo-button :play-bgs-noise)
+                [:br]
+                [:br]
+                (demo-button :play-bgs-nil)
                 ]
                [:hr]
                ;; SE

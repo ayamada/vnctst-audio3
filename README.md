@@ -1,8 +1,8 @@
-当プロジェクトは
-[vnctst-audio4](https://github.com/ayamada/vnctst-audio4)
-へと移行しました。
+**当プロジェクトは [vnctst-audio4](https://github.com/ayamada/vnctst-audio4) へと移行しました。**
 
 こちらは今後更新されない予定です。
+
+----
 
 <div align="center"><img src="https://github.com/ayamada/vnctst-audio3/raw/master/img/logo.png" /></div>
 
